@@ -9,24 +9,33 @@ define(function( require ){
 
 		initialize : function(){
 			
-			this.prelod.init();
+			this.preload.init();
 
 		 }, /*-- initialize --*/
 
 		preload : {
 
 			init : function(){
-				this.featureDetection();
+				this.featureDetection().accessLog();
 			 },
 
 			featureDetection : function( self ){
 				self = this;
 
+				window.setTimeout(function(){
+					console.log('First chain');
 
+					return self;
+				 }, 2000);
+
+				return this;
 			 },
 
 			accessLog : function(){
 
+				console.log('Second chain');
+
+				return this;
 			 }
 
 		}, /*-- preload --*/
