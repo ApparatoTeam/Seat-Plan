@@ -5,3 +5,20 @@ body{
 	-webkit-touch-callout: none;
 }
 
+.navbar{
+	height: 50px;
+	background-color: #607D8B;
+}
+
+.navbar #app-name{
+	font-family: 'latolight';
+	letter-spacing: 2px;
+}
+
+strong{
+	font-family: 'latobold';
+}
+
+.page-content{
+	padding-top: 50px;
+}

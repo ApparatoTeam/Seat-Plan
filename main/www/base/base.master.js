@@ -5,11 +5,10 @@ require.config({
 	paths : {
 		jQuery : 'js/lib/jquery.min',
 		Framework7 : 'js/lib/framework7.min',
-		TweenMax : 'js/lib/TweenMax.min',
-		moment : 'js/lib/moment.min'
-	}
+		TweenMax : 'js/lib/TweenMax.min'
+	 }
 });
 
-requirejs(['js/mod/configuration'], function(obj){
-	obj.initialize();
+requirejs([ 'js/mod/config', 'js/lib/moment.min' ], function( obj, moment ){
+	( 'app' in window ) ? obj.initialize( moment ) : null;
 });

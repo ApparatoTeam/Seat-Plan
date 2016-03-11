@@ -1,18 +1,74 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="./stack/css/parser.css" />
+        <meta charset="utf-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi">
+        <link rel="stylesheet" type="text/css" href="./stack/css/parser.css">
         <title>Seat Planner</title>
     </head>
     <body>
         
+        <div class="panel-overlay"></div>
+
         <div class="views">
-            
-        </div>
+            <div class="view main-view">
+                <div class="pages">
+                    
+                    <div class="page" data-page="index">
+                        <div class="navbar">
+                            <div class="navbar-inner">
+                                <div class="center">
+                                    <span id="app-name" data-preloader="text">
+                                        <strong>iSEAT</strong> PLAN
+                                    </span>
+                                </div>
+                                <div class="right">
+                                    <a href="#" class="link icon-only">
+                                        <i class="icon icon-bars"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div><!--/.navbar-->
+
+                        <div class="page-content">
+                            <span class="preloader"></span>
+                            
+
+                        </div><!--/.page-content-->
+
+                        <!-- Speed Dial Wrap -->
+                        <div class="speed-dial">
+
+                            <!-- FAB inside will open Speed Dial actions -->
+                            <a href="#" class="floating-button">
+                                <!-- First icon is visible when Speed Dial actions are closed -->
+                                <i class="icon icon-plus"></i>
+                                <!-- Second icon is visible when Speed Dial actions are opened -->
+                                <i class="icon icon-close"></i>
+                            </a>
+
+                            <!-- Speed Dial Actions -->
+                            <div class="speed-dial-buttons">
+                                <!-- First Speed Dial button -->
+                                <a href="#">
+                                    <i class="icon fa fa-fw fa-pencil"></i>
+                                </a>
+                                <!-- Second Speed Dial  button -->
+                                <a href="#">
+                                    <i class="icon fa fa-fw fa-download"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                    </div><!--/[data-page=index]-->
+
+                    
+
+                </div>
+            </div>
+        </div><!--/.views-->
 
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" data-main="base/base.master" src="base/require.min.js"></script>
