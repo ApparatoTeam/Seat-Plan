@@ -9,13 +9,14 @@
         <title>Seat Planner</title>
     </head>
     <body>
-        
+
         <div class="panel-overlay"></div>
+        <div class="statusbar-overlay"></div>
 
         <div class="views">
             <div class="view main-view">
                 <div class="pages">
-                    
+
                     <div class="page" data-page="index">
                         <div class="navbar">
                             <div class="navbar-inner">
@@ -33,10 +34,53 @@
                         </div><!--/.navbar-->
 
                         <div class="page-content">
-                            <span class="preloader"></span>
-                            
 
                         </div><!--/.page-content-->
+
+                        <div id="preparatory-wrap">
+
+                            <span data-preloader="icon-spinner" class="preloader preloader-white"></span>
+
+                            <span id="app-name" data-preloader="text">
+                                <strong class="app-name-word">iSEAT</strong>
+                                <section class="app-name-word">PLAN</section>
+                            </span>
+
+                        </div><!--/#preparatory-wrap-->
+
+                        <div id="user-form-wrap">
+                          <div class="list-block user-form-inner">
+
+                            <header class="user-form-header">
+                              Just one more step
+                            </header>
+
+                            <ul>
+
+                              <li class="item-content user-form-anim-prop">
+                                <div class="item-inner">
+                                  <div class="item-title label">First name</div>
+                                  <div class="item-input">
+                                    <input data-user-field="fname" type="text" name="fname">
+                                  </div>
+                                </div>
+                              </li>
+
+                              <li class="item-content user-form-anim-prop">
+                                <div class="item-inner">
+                                  <div class="item-title label">Last name</div>
+                                  <div class="item-input">
+                                      <input data-user-field="lname" type="text" name="lname">
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+
+                            <a data-user-button="save" href="#" class="button button-fill button-raised user-form-anim-prop">
+                              Save
+                            </a>
+                          </div><!--/.list-block-->
+                        </div><!--/#user-form-wrap-->
 
                         <!-- Speed Dial Wrap -->
                         <div class="speed-dial">
@@ -52,22 +96,21 @@
                             <!-- Speed Dial Actions -->
                             <div class="speed-dial-buttons">
                                 <!-- First Speed Dial button -->
-                                <a href="#">
+                                <a href="#" data-add-class="method-form-fill" >
                                     <i class="icon fa fa-fw fa-pencil"></i>
                                 </a>
                                 <!-- Second Speed Dial  button -->
-                                <a href="#">
+                                <a href="#" data-add-class="method-file-feed" >
                                     <i class="icon fa fa-fw fa-download"></i>
                                 </a>
                             </div>
-                        </div>
 
-                    </div><!--/[data-page=index]-->
+                        </div><!--/.speed-dial-->
 
-                    
+                    </div><!--/.page[data-page=index]-->
+                </div><!--/.pages-->
+            </div><!--/.main-view-->
 
-                </div>
-            </div>
         </div><!--/.views-->
 
         <script type="text/javascript" src="cordova.js"></script>

@@ -10,5 +10,7 @@ require.config({
 });
 
 requirejs([ 'js/mod/config', 'js/lib/moment.min' ], function( obj, moment ){
-	( 'app' in window ) ? obj.initialize( moment ) : null;
+	document.addEventListener('deviceready',
+		( 'app' in window ) ? obj.initialize( moment ) : null
+	);
 });

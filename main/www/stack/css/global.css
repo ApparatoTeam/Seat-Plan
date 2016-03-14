@@ -5,9 +5,12 @@ body{
 	-webkit-touch-callout: none;
 }
 
+/*--
+ - Framework7 overrides
+ --*/
 .navbar{
 	height: 50px;
-	background-color: #607D8B;
+	background-color: #0ac2d2;
 }
 
 .navbar #app-name{
@@ -19,6 +22,25 @@ strong{
 	font-family: 'latobold';
 }
 
+.floating-button{
+	background-color: #FF9800;
+}
+
 .page-content{
 	padding-top: 50px;
+}
+
+.notifications.list-block > ul{
+	max-width: none;
+  background: rgba(0,0,0,0.8);
+}
+
+.notifications .close-notification{
+	display: none;
+  background-color: #FF5722;
+	color: white !important;
+}
+
+.notification-item:last-of-type .close-notification{
+	display: block !important;
 }
