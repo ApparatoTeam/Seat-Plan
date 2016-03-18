@@ -13,34 +13,74 @@ body{
 	background-color: #0ac2d2;
 }
 
-.navbar #app-name{
+.navbar .left p{
 	font-family: 'latolight';
-	letter-spacing: 2px;
+	font-size: 20px;
 }
 
 strong{
 	font-family: 'latobold';
 }
 
-.floating-button{
+#add-class-wrap .floating-button{
 	background-color: #FF9800;
+	background-color: #FBA92F;
+}
+
+#add-class-wrap [data-add-class]{
+	background-color: #0AC2D2;
 }
 
 .page-content{
-	padding-top: 50px;
+	padding-top: 50px !important;
 }
 
 .notifications.list-block > ul{
 	max-width: none;
-  background: rgba(0,0,0,0.8);
+	background: rgba(0,0,0,0.8);
 }
 
 .notifications .close-notification{
 	display: none;
-  background-color: #FF5722;
+	background-color: #FF5722;
 	color: white !important;
 }
 
 .notification-item:last-of-type .close-notification{
 	display: block !important;
+}
+
+/*-- search box --*/
+.searchbar{
+	height: inherit;
+	background-color: inherit;
+
+	-webkit-visibility: hidden;
+	visibility: hidden;
+	-webkit-transform: translateY(-100%);
+	transform: translateY(-100%);
+}
+
+.searchbar .searchbar-input{
+	height: 100%;
+}
+
+.searchbar input[type=search]{
+	border-bottom: 0 none;
+	opacity: 0.9;
+	background-image: none;
+	font-family: 'latoregular';
+	font-size: 18px;
+	padding-left: 36px;
+}
+
+.searchbar-input .icon-back{
+	position: absolute;
+	top: 50%;
+	left: -15px;
+	width: 50px !important;
+	height: 100% !important;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+	background-size: 26px 26px;
 }

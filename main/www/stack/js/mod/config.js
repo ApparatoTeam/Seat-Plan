@@ -1,5 +1,4 @@
 define(function( require ){
-
 	'use strict';
 
 	require('jQuery');
@@ -8,22 +7,16 @@ define(function( require ){
 
 	return window.app.config = window.app.config || {
 
-		api : {
-			moment : null
-		 },
-
-		initialize : function( moment ){
-			this.api.moment = moment;
+		initialize : function(){
+			//window.localStorage.removeItem('--user');
+			app.global.f7.init();
+			app.global.moment.init();
+			app.global.physicalButtons.init(function(){
+				alert('back button triggered');
+				return false;
+			});
 			this.preload.init();
-
-			requirejs(['js/mod/utils'], function( utils ){
-				utils.physicalButtons.init(function(){
-						alert('back button triggered');
-						return false;
-				 });
-			 });
-
-		 }, /*-- initialize --*/
+		}, /*-- initialize --*/
 
 		preload : {
 			o : {
@@ -35,23 +28,26 @@ define(function( require ){
 			}, //--; preload.o
 
 			init : function(){
-				this.start.frontendFramework();
 				( this.o.status ) ? this.done() : this.start.init();
 			}, //--;preload.init
 
 			start : {
-				init : function(){
+				init : function( self, delay ){
+					self = this;
+					delay = 3;
+
 					app.config.preload.done();
 					//--! do all checks here
-					this.checkAndroidOS();
-					this.checkCacheSystem();
-				 },
+					window.setTimeout(function(){
+						self.checkAndroidOS();
+						self.checkCacheSystem();
+					}, ( delay * 1000 ) );
+				},
 
 				frontendFramework : function(){
 					// activate theme framework
-					app.config.f7.init();
-					//app.config.preload.o.steps += 1;
-				 },
+					//app.global.f7.init();
+				},
 
 				checkAndroidOS : function( self, min, ua ){
 					self = this;
@@ -59,30 +55,28 @@ define(function( require ){
 					ua = window.navigator.userAgent;
 
 					if( parseFloat( ua.match(/Android\s+([\d\.]+)/)[1] ) < min ){
-							app.config.preload.failed({
-									notice : 'Android OS version is not supported. KitKat 4.4+ required.'
-							 });
-							return;
-					 }
+						app.config.preload.failed({
+							notice : 'Android OS version is not supported. KitKat 4.4+ required.'
+						});
+						return;
+					}
 
-					 app.config.preload.o.steps += 1;
-				 },
+					app.config.preload.o.steps += 1;
+				},
 
 				checkCacheSystem : function(){
-						if( ! 'localStorage' in window ){
-							app.config.preload.failed({
-									notice : 'Working cache system is not supported by the device.'
-							 });
-							 return;
-						 }
-
-						 app.config.preload.o.steps += 1;
-				 }
+					if( ! 'localStorage' in window ){
+						app.config.preload.failed({
+							notice : 'Working cache system is not supported by the device.'
+						});
+						return;
+					}
+					app.config.preload.o.steps += 1;
+				}
 
 			}, //--; preload.start
 
 			accessLog : function(){
-
 				return this;
 			}, //--; preload.accessLog
 
@@ -102,117 +96,115 @@ define(function( require ){
 			}, //--; preload.done
 
 			failed : function( param ){
-					param = param || {
-						notice : 'Error unknown'
-					};
+				param = param || {
+					notice : 'Error unknown'
+				};
 
-					window.cancelAnimationFrame( app.config.preload.o.rAF );
-					app.config.preload.o.status = false;
+				window.cancelAnimationFrame( app.config.preload.o.rAF );
+				app.config.preload.o.status = false;
 
-					( new TimelineLite )
+				( new TimelineLite )
+				.to('.app-name-word', 0.3, {
+					marginLeft: 0,
+					marginRight: 0
+				})
+				.to('.preloader', 0.3, { autoAlpha : 0 });
+
+				app.global.f7.o.app.addNotification({
+					message : param.notice,
+					button : {
+						text: 'Exit',
+						color : 'white'
+					},
+					onClose : function(){
+						navigator.app.exitApp();
+					}
+				});
+			}, //--; preload.failed
+
+			initServices : {
+ 				init : function(){
+					app.config.preload.offview.init();
+ 				},
+
+ 				protocols : {
+ 					checkUser : function(){
+						app.config.user.init();
+						//console.log('checking user...');
+					},
+
+					checkInternetConnection : function(){
+						//console.log('checking net...');
+					}
+					//... & network connection etc
+ 				}
+
+ 			}, /*--; preload.initServices --*/
+
+			 offview : {
+				init : function(){
+					this.animation();
+				},
+
+				animation : function( self, delay ){
+					self = this;
+					delay = 0.0;
+
+					( new TimelineLite({
+						onComplete : function(){
+							//--> clearing
+							self.clear();
+							//--> start protocols
+							self.startProtocols();
+						 }
+					}) )
 					.to('.app-name-word', 0.3, {
+						delay : delay,
 						marginLeft: 0,
 						marginRight: 0
 					})
-					.to('.preloader', 0.3, { autoAlpha : 0 });
+					.to('.preloader', 0.3, { autoAlpha : 0 }, 'fade-off')
+					.staggerTo('.app-name-word', 0.3, {
+						autoAlpha : 0
+					}, 0.1, 'fade-off')
+					.to('#preparatory-wrap', 0.5, {
+						y : '100%',
+						autoAlpha : 0,
+						ease : Expo.easeInOut
+					}, 'fade-off+=0.2');
 
-					app.config.f7.o.app.addNotification({
-						message : param.notice,
-						button : {
-								text: 'Exit',
-								color : 'white'
-						 },
-						onClose : function(){
-								navigator.app.exitApp();
-						 }
-					});
-			 }, //--; preload.failed
+					 return;
+				},
 
-			 initServices : {
+				clear : function(){
+					app.config.preload.o.status = true;
+					if( $('#preparatory-wrap').length )
+						$('#preparatory-wrap').remove();
 
- 				init : function(){
-					window.app.page = {};
-					app.config.preload.offview.init();
- 				 },
+					return;
+				},
 
- 				 protocols : {
- 					 checkUser : function(){
-						 app.config.user.init();
-						 //console.log('checking user...');
-					 },
+				startProtocols : function( obj ){
+					obj = app.config.preload.initServices.protocols;
+					//app.config.preload.initServices.protocols
+					for( var protocols in obj ){
+						( obj[protocols] ).call([]);
+					}
 
-					 checkInternetConnection : function(){
-						 //console.log('checking net...');
-					  }
-					 //... & network connection etc
- 				  }
+					return;
+				}
 
- 			 }, /*--; preload.initServices --*/
-
-			 offview : {
-				 init : function(){
-					 this.animation();
-				  },
-
-					animation : function( self, delay ){
-						self = this;
-						delay = 0.0;
-
-						( new TimelineLite({
-								onComplete : function(){
-									//--> clearing
-									self.clear();
-									//--> start protocols
-									self.startProtocols();
-								 }
-						 }) )
-						.to('.app-name-word', 0.3, {
-							delay : delay,
-							marginLeft: 0,
-							marginRight: 0
-						})
-						.to('.preloader', 0.3, { autoAlpha : 0 }, 'fade-off')
-						.staggerTo('.app-name-word', 0.3, {
-								autoAlpha : 0
-						 }, 0.1, 'fade-off')
-						 .to('#preparatory-wrap', 0.5, {
-							 y : '100%',
-							 autoAlpha : 0,
-							 ease : Expo.easeInOut
-						 }, 'fade-off+=0.2');
-
-						 return;
-					 },
-
-					clear : function(){
-						app.config.preload.o.status = true;
-						if( $('#preparatory-wrap').length )
-							$('#preparatory-wrap').remove();
-
-						return;
-					 },
-
-					startProtocols : function( obj ){
-						obj = app.config.preload.initServices.protocols;
-						//app.config.preload.initServices.protocols
-						for( var protocols in obj ){
-							( obj[protocols] ).call([]);
-						 }
-
-						 return;
-					 }
-
-			 } /*--; preload.offview --*/
+			} /*--; preload.offview --*/
 
 		}, /*-- preload --*/
 
 		user : {
 			o : {
-					index	: 'user',
-					fname : null,
-					lname : null,
-					new	  : true
-			 },
+				index	: '--user',
+				fname : null,
+				lname : null,
+				new	  : true
+			},
 
 			callback : null,
 
@@ -226,23 +218,23 @@ define(function( require ){
 
 				if( window.localStorage.getItem( self.o.index ) != undefined ){
 					self.o.new = false;
-					app.config.bootstrap.init();
+					app.config.__route.init();
 					return;
 				}else{
-						self.o.new = true;
-						this.createNew.init();
-				 }
+					self.o.new = true;
+					this.createNew.init();
+				}
 
-			 }, /*--; user.checkExisting --*/
+			}, /*--; user.checkExisting --*/
 
 			createNew : {
 				o : {
-						userFormWrap : $('#user-form-wrap'),
-						userFormHeader : $('.user-form-header'),
-						userFormField : $('[data-user-field]'),
-						userFormSave : $('[data-user-button=save]'),
-						tween : new TimelineLite
-				 },
+					userFormWrap : $('#user-form-wrap'),
+					userFormHeader : $('.user-form-header'),
+					userFormField : $('[data-user-field]'),
+					userFormSave : $('[data-user-button=save]'),
+					tween : new TimelineLite
+				},
 
 				init : function(){
 					( this.showForm() ).play();
@@ -260,29 +252,28 @@ define(function( require ){
 						y : '0%',
 						autoAlpha : 1,
 						onComplete: function(){
-								if( n == 3 ) self.data.saving();
-									//app.config.bootstrap.init();
-								n+=1;
-						 }
-					 }, 0.2, 'show-form-wrap')
+							if( n == 3 ) self.data.saving();
+								//app.config.bootstrap.init();
+							n+=1;
+						}
+					}, 0.2, 'show-form-wrap')
 					.pause();
 
 					return self.o.tween;
 				}, /*--; user.createNew.showForm --*/
 
 				error : function(){
+					app.global.f7.o.app.addNotification({
+						message : 'Please complete the form field',
+						button : {
+							text : 'Dismiss'
+						}
+					});
 
-						app.config.f7.o.app.addNotification({
-							message : 'Please complete the form field',
-							button : {
-									text : 'Dismiss'
-							 }
-						 });
-
-						 window.setTimeout(function(){
-							 	app.config.f7.o.dom('.close-notification').trigger('click');
-						  }, 5000);
-				 },
+					window.setTimeout(function(){
+						app.global.f7.o.dom('.close-notification').trigger('click');
+					}, 5000);
+				},
 
 				data : {
 					item  : 0,
@@ -295,6 +286,8 @@ define(function( require ){
 						( app.config.user.createNew.o.userFormSave )
 						.on('click', function( e ){
 
+							if(! e.originalEvent )  return;
+
 							self.input();
 
 							if ( self.token.length == self.item ) {
@@ -303,15 +296,17 @@ define(function( require ){
 									self.token[0] + '+' + self.token[1]
 								);
 
-								app.config.bootstrap.init();
+								app.config.user.offview();
 							} else {
 								app.config.user.createNew.error();
-							}
+							 }
 
 							e.stopImmediatePropagation();
 							e.preventDefault();
-						 });
-					 },
+						});
+
+						return;
+					},
 
 					input : function( self ){
 						self = this;
@@ -320,50 +315,44 @@ define(function( require ){
 
 						( app.config.user.createNew.o.userFormField )
 						.each(function(){
-
 							if( typeof $(this).val() != 'undefined' && $(this).val() !== '' ){
 								self.token.push( $(this).val() );
-							 }
-
+							}
 							self.item += 1;
-						 });
+						});
 
 						 return;
-					 }
+					}
 
-				 } /*--; user.createNew.data --*/
+				} /*--; user.createNew.data --*/
 
-			} /*--; user.createNew --*/
+			}, /*--; user.createNew --*/
+
+			offview : function(){
+				( new TimelineLite({
+					onComplete : function(){
+						app.config.__route.init();
+					}
+				}) )
+				.staggerTo('.user-form-anim-prop', 0.3, {
+					y : '100%',
+					autoAlpha : 0
+				}, 0.2, 'hide-form-wrap')
+				.to( '#user-form-wrap', 0.7, {
+ 					autoAlpha : 0
+				}, 'hide-form-wrap');
+
+				return
+			} /*--; user.offview --*/
 
 		}, /*-- user --*/
 
-		// TODO: show navbar and components
-		bootstrap : {
-				init : function(){
-					console.log('Program started....');
-				 },
-		 },
-
-		f7 : {
-			o : {
-				app  : null,
-				dom  : Dom7,
-				view : null
-			 },
-
+		__route : {
 			init : function(){
-				this.o.app = new Framework7({
-					material : true
-				 });
+				app.global.router.init('class-list');
+			} /*--; route.init --*/
+		} /*-- __route --*/
 
-				this.o.view = (this.o.app).addView('.main-view', {});
-			 },
-
-			view : function(){ }
-
-		}, /*-- f7 --*/
-
-
-	 }; /*-- app.config --*/
+	}; /*-- app.config --*/
 
 });

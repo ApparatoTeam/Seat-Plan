@@ -1,0 +1,103 @@
+/*--
+ - Preparatory state non-prop
+ --*/
+[data-page="class-list"] .navbar{
+	-webkit-transform: translateY(-100%);
+	transform: translateY(-100%);
+	-webkit-visibility: hidden;
+	visibility: hidden;
+	opacity: 0;
+}
+
+[data-page="class-list"] #add-class-wrap{
+	-webkit-visibility: hidden;
+	visibility: hidden;
+	opacity: 0;
+	-webkit-transform: scale(0);
+	transform: scale(0);
+}
+
+/*---------------------
+ - Page content & props
+ ---------------------*/
+[data-page="class-list"] .page-content{
+	-webkit-visibility: hidden;
+	visibility: hidden;
+	opacity: 0;
+}
+
+/*--
+ - Textual guide
+ --*/
+[data-page="class-list"] #text-guide-wrap{
+	display: none;
+	position: relative;
+	z-index: 500;
+}
+
+[data-page="class-list"] #text-guide-wrap p.text-guide,
+.searchbar-not-found{
+	color: rgba(0,0,0,0.15);
+	font: 35px/100% 'pacificoregular' !important;
+	text-align: center;
+}
+
+/*--
+ - Class list
+ --*/
+[data-page="class-list"] #class-list-wrap{
+	position: relative;
+	height: 100%;
+	margin: 0;
+}
+
+[data-page="class-list"] #class-list-wrap .item-inner{
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+
+/*-- action icons -*/
+[data-page="class-list"] #class-list-wrap .swipeout-actions-right .fa{
+	font-size: 22px;
+}
+
+a.bg-orange{
+	background-color: #FBA92F !important;
+}
+
+/*-- class meta --*/
+[data-page="class-list"] #class-list-wrap .class-meta-wrap{
+	margin-right: 0;
+}
+
+[data-page="class-list"] #class-list-wrap .class-meta{
+	position: relative;
+	margin-right: 25px;
+	margin-left: 12px;
+  color: #069CA9;
+}
+
+[data-page="class-list"] #class-list-wrap .class-meta::after{
+	position: absolute;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	transform: translateY(-50%);
+
+	margin-left: 5px;
+
+	display: inline-block;
+	font-family: FontAwesome;
+	font-size: 20px;
+
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+[data-page="class-list"] #class-list-wrap .class-meta-student::after{
+	content: '\f007';
+}
+
+[data-page="class-list"] #class-list-wrap .class-meta-sort-type::after{
+	content: '\f074';
+}

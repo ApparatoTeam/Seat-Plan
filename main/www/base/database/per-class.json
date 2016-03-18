@@ -1,0 +1,23 @@
+{
+  "index" : "$2y$10$r8D0/U.XcpAt5bu9WF2Jhugfi7Rgoj0IeOi2l1NpEagJTk/f341di",
+  "cache-group" : "class",
+
+  "meta" : {
+    "name" : "Class One",
+    "stack" : "column | row",
+    "sorting" : {
+        "mode" : "auto",
+        "type" : "alternate"
+    }
+  },
+
+  "student" : [
+    {
+
+    },
+    {
+
+    }
+  ]
+
+}
