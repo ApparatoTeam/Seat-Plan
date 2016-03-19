@@ -37,16 +37,38 @@ window.app.global = {
 		dom : './pages/router.html',
 		page : null,
 		callback : null,
-		delay : 700,
+		delay : 500,
 
 		init : function( page, callback ){
 			this.page = page;
 			this.callback = callback;
-			this.interface();
+			//this.interface();
+			this.test();
 		}, /*--; app.router.init --*/
+
+		test : function(){
+			self = this;
+
+			(app.global.f7.o.view).router.load({
+				url : './pages/'+ self.page +'.html'
+			});
+
+			app.global.f7.o.dom(document).on(
+				'pageAfterAnimation',
+				'.page[data-page='+self.page+']',
+				function(){
+					requirejs(['js/mod/'+self.page], function(obj){
+						$('[data-page=router]').remove();
+						obj.initialize();
+					});
+				}
+			);
+		},
 
 		interface : function( self ){
 			self = this;
+
+			console.log(this.page);
 
 			(app.global.f7.o.view).router.load({
 				url : self.dom
