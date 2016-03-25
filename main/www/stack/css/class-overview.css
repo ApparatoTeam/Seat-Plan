@@ -90,3 +90,7 @@
 [data-page="class-overview"] .page-content #main-col-student-list .chip-media{
     background-color: #4CAF50;
 }
+
+[data-page="class-overview"] .page-content #main-col-student-list [data-student-action="activity"]{
+    background-color: #607D8B;
+}

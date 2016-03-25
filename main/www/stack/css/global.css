@@ -84,3 +84,14 @@ strong{
 	transform: translateY(-50%);
 	background-size: 26px 26px;
 }
+
+/*--
+ - Picker
+ --*/
+.picker-modal .toolbar{
+	background-color: #9E9E9E;
+}
+
+.picker-item{
+	font-family: 'latoregular';
+}
