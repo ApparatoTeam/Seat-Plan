@@ -3,7 +3,7 @@
     <div class="navbar">
         <div class="navbar-inner">
             <div class="left">
-                <a href="#" class="link back icon-only">
+                <a href="#" class="link back icon-only" data-back-of="class-overview">
                     <i class="icon icon-back"></i>
                 </a>
                 <p>Overview</p>
@@ -11,7 +11,7 @@
 
             <div class="center"></div><!--/.center-->
             <div class="right">
-                <a class="link" href="./pages/student-create.html">
+                <a class="link" href="#" data-student="enlist">
                     <i class="fa fa-fw fa-user-plus"></i>
                 </a>
             </div><!--/.right-->
@@ -28,22 +28,23 @@
                     <div class="card-header" id="meta-class-name">
                         <div class="chip">
                             <div class="chip-media"><i class="fa fa-fw fa-rocket"></i></div>
-                            <div class="chip-label">Class One</div>
+                            <div class="chip-label" data-class="name"></div>
                         </div>
                     </div><!--/#meta-class-name-->
 
                     <div class="card-content" id="meta-class-prop">
-                        <div class="card-content-inner">Card content</div>
-                        <div class="card-content-inner">Card content</div>
-                        <div class="card-content-inner">Card content</div>
-                        <div class="card-content-inner">Card content</div>
-                        <div class="card-content-inner">Card content</div>
-                        <div class="card-content-inner">Card content</div>
-                        <div class="card-content-inner">Card content</div>
-                        <div class="card-content-inner">Card content</div>
-                        <div class="card-content-inner">Card content</div>
-                        <div class="card-content-inner">Card content</div>
-                        <div class="card-content-inner">Card content</div>
+                        <div class="card-content-inner" data-class="schedule">
+                            <i class="fa fa-fw fa-calendar"></i>
+                            <span></span>
+                        </div>
+                        <div class="card-content-inner" data-class="sorting-mode">
+                            <i class="fa fa-fw fa-random"></i>
+                            <span></span>
+                        </div>
+                        <div class="card-content-inner" data-class="student-count">
+                            <i class="fa fa-fw fa-user"></i>
+                            <span></span>
+                        </div>
                     </div>
 
                     <div class="card-footer">
@@ -56,31 +57,7 @@
 
             <div class="col-40 main-col" id="main-col-student-list">
                 <div class="list-block">
-                    <ul>
-                        <li class="swipeout">
-                            <div class="swipeout-content">
-                                <div class="item-content">
-                                    <div class="item-media">
-                                        <div class="chip">
-                                            <div class="chip-media bg-orange">1</div>
-                                        </div>
-                                    </div>
-                                    <div class="item-inner">Javier Renato Jr</div>
-                                </div>
-                            </div>
-
-                            <div class="swipeout-actions-right">
-                                <a data-student-action="activity" href="#">
-                                    <i class="fa fa-fw fa-line-chart"></i>
-                                </a>
-
-                                <a data-student-action="remove" class="swipeout-delete link" href="#">
-                                    <i class="fa fa-fw fa-close"></i>
-                                </a>
-                            </div>
-                        </li>
-
-                    </ul>
+                    <ul data-dom="student-list"></ul>
                 </div>
             </div><!--/#main-col-student-list-->
 

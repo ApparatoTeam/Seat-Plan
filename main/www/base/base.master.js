@@ -39,11 +39,11 @@ window.app.global = {
 		callback : null,
 		delay : 500,
 
-		init : function( page, callback ){
+		init : function( page, test, callback ){
 			this.page = page;
+			test = test || false;
 			this.callback = callback;
-			//this.interface();
-			this.test();
+			( !test ) ? this.interface() : this.test();
 		}, /*--; app.router.init --*/
 
 		test : function(){
@@ -67,8 +67,6 @@ window.app.global = {
 
 		interface : function( self ){
 			self = this;
-
-			console.log(this.page);
 
 			(app.global.f7.o.view).router.load({
 				url : self.dom

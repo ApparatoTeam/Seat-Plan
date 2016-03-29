@@ -349,7 +349,7 @@ define(function( require ){
 
 		__route : {
 			init : function(){
-				app.global.router.init('simulation');
+				app.global.router.init('class-overview', true);
 			} /*--; route.init --*/
 		} /*-- __route --*/
 

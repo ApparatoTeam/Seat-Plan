@@ -1,0 +1,41 @@
+{
+    "index": "--class-1459237618081",
+    "students": [
+        {
+            "index": 1459243379352,
+            "absences": [],
+            "recitations": [],
+            "meta": {
+                "name": {
+                    "lastName": "Javier",
+                    "middleName": "Castro",
+                    "firstName": "Renato Jr"
+                },
+                "studentID": "10 LN 126",
+                "gender": "male"
+            }
+        },
+        {
+            "index": 1459243524096,
+            "absences": [],
+            "recitations": [],
+            "meta": {
+                "name": {
+                    "lastName": "Javier",
+                    "middleName": "Alimboyao",
+                    "firstName": "Ruth"
+                },
+                "studentID": "11 LN 4567",
+                "gender": "female"
+            }
+        }
+    ],
+    "meta": {
+        "name": "Renato Class",
+        "schedule": null,
+        "sorting": {
+            "mode": null,
+            "type": null
+        }
+    }
+}

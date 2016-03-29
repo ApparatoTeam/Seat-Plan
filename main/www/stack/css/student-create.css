@@ -1,3 +1,9 @@
+/*-- dynamic class name on navbar --*/
+[data-page="student-create"] [data-dom="class-name"]{
+    font-family: 'latolight';
+    padding-right: 16px;
+}
+
 /*-- Student form proper --*/
 [data-page="student-create"] .student-form-inner{
     padding: 0 70px;

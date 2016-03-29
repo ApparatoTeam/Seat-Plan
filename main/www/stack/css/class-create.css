@@ -23,7 +23,7 @@
 /*-- save button --*/
 [data-page="class-create"] [data-create-button="save"]{
     width: 200px;
-    margin: 0 auto;
+    margin: 0 auto 70px;
     background-color: #FF9800;
     font-family: 'latolight';
 }
