@@ -3,18 +3,16 @@
     <div class="navbar">
         <div class="navbar-inner">
             <div class="left">
-                <a href="#" class="link back icon-only">
+                <a href="#" class="link icon-only" data-back-of="simulation">
                     <i class="icon icon-back"></i>
                 </a>
-                <p>Simulation</p>
+                <p>Seat plan simulation</p>
             </div><!--/.left-->
 
             <div class="center"></div><!--/.center-->
 
             <div class="right">
-                <a class="link" href="./pages/student-create.html">
-                    <i class="fa fa-fw fa-user-plus"></i>
-                </a>
+                <p data-dom="class-name"></p>
             </div><!--/.right-->
         </div><!--/.navbar-inner-->
 
@@ -24,10 +22,13 @@
 
         <div id="canvas-simulators">
 
-            <div class="blocks-container">
-
+            <div data-dom="tile-container">
+                <div data-dom="tile-inner" class="grid"></div>
             </div>
 
+            <div data-dom="origin">
+                <i class="fa fa-fw fa-user"></i>
+            </div>
 
         </div><!--/#canvas-simulator-->
 

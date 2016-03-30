@@ -10,6 +10,7 @@
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     font-family: 'latolight';
+    overflow: hidden;
 }
 
 [data-page="class-overview"] .page-content .row .main-col{
@@ -69,6 +70,7 @@
 [data-page="class-overview"] .page-content #main-col-student-list{
     background-color: rgba(216,241,243,0.70);
     padding: 0;
+    overflow-y: auto;
 }
 
 [data-page="class-overview"] .page-content #main-col-student-list .list-block{

@@ -8,13 +8,21 @@ define([], function(){
 
         initialize : function(){
             this.__load.init();
-            this.misc.init();
+            this.actions.init();
         }, /*-- initialize --*/
 
-        misc : {
+        actions : {
             init : function(){
+                this.simulate();
                 this.student.init();
                 this.__back();
+            },
+
+            simulate : function(){
+                $('[data-class-action=simulate]').on('click', function(){
+                    app.global.router.init('simulation');
+                    $(this).off('click');
+                });
             },
 
             student : {

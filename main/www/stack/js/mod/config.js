@@ -20,11 +20,11 @@ define(function( require ){
 
 		preload : {
 			o : {
-				status : true,
+				status : false,
 				log    : null,
 				tween  : null,
 				rAF		 : null,
-				steps  : 2
+				steps  : 0
 			}, //--; preload.o
 
 			init : function(){
@@ -349,7 +349,7 @@ define(function( require ){
 
 		__route : {
 			init : function(){
-				app.global.router.init('class-overview', true);
+				app.global.router.init('class-list', true);
 			} /*--; route.init --*/
 		} /*-- __route --*/
 
