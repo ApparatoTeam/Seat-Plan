@@ -2,7 +2,7 @@
  - Preparatory phase
  --*/
 [data-page="index"] #preparatory-wrap{
-	/*display: none;*/
+	display: none;
 	position: fixed;
 	top: 0;
 	left: 0;

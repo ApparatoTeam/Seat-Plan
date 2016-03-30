@@ -20,11 +20,11 @@ define(function( require ){
 
 		preload : {
 			o : {
-				status : false,
+				status : true,
 				log    : null,
 				tween  : null,
 				rAF		 : null,
-				steps  : 0
+				steps  : 2
 			}, //--; preload.o
 
 			init : function(){

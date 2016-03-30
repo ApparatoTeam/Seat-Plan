@@ -15,7 +15,7 @@ define([], function(){
         temp : function(){
             localStorage['--class-1459289730499'] = '{"index":"--class-1459289730499","meta":{"name":"My Class 1","schedule":"MWF 8am to 9am","sorting":{"mode":"automatic","type":"name"}},"students":[{"index":"1459289759848","absences":[],"recitations":[],"meta":{"name":{"lastName":"Javier","middleName":"Crd","firstName":"Reo"},"studentID":"10LN1534","gender":"male"}},{"index":"1459289781190","absences":[],"recitations":[],"meta":{"name":{"lastName":"Sommer","middleName":"Soth","firstName":"Ruth"},"studentID":"11LN1567","gender":"female"}},{"index":"1459289799909","absences":[],"recitations":[],"meta":{"name":{"lastName":"Sanders","middleName":"Korg","firstName":"Chelle"},"studentID":"17LN1890","gender":"female"}},{"index":"1459290001975","absences":[],"recitations":[],"meta":{"name":{"lastName":"Doe","middleName":"Donut","firstName":"John"},"studentID":"10lN90890","gender":"male"}},{"index":"1459290036590","absences":[],"recitations":[],"meta":{"name":{"lastName":"Nald","middleName":"Doe","firstName":"Mac"},"studentID":"18LN789","gender":"male"}},{"index":"1459290058412","absences":[],"recitations":[],"meta":{"name":{"lastName":"Skin","middleName":"Still","firstName":"Rumple"},"studentID":"18393746d","gender":"male"}},{"index":"1459290096574","absences":[],"recitations":[],"meta":{"name":{"lastName":"Roose","middleName":"Enact","firstName":"Theodore"},"studentID":"789ddK9","gender":"male"}},{"index":"1459290133878","absences":[],"recitations":[],"meta":{"name":{"lastName":"Hazzir","middleName":"Azzaz","firstName":"Aalam"},"studentID":"6578GHaz","gender":"male"}},{"index":"1459290431271","absences":[],"recitations":[],"meta":{"name":{"lastName":"Libertad","middleName":"Kurd","firstName":"Santiago"},"studentID":"Hw7800","gender":"male"}},{"index":"1459290449014","absences":[],"recitations":[],"meta":{"name":{"lastName":"Steward","middleName":"Sick","firstName":"Rod"},"studentID":"755847r","gender":"male"}},{"index":"1459290644940","absences":[],"recitations":[],"meta":{"name":{"lastName":"Tracker","middleName":"Reigh","firstName":"Sabina"},"studentID":"888909R","gender":"female"}},{"index":"1459290662327","absences":[],"recitations":[],"meta":{"name":{"lastName":"Stalk","middleName":"Bean","firstName":"Jack"},"studentID":"87890h7","gender":"male"}},{"index":"1459290691414","absences":[],"recitations":[],"meta":{"name":{"lastName":"Time","middleName":"Ovg","firstName":"Nick"},"studentID":"89665tY","gender":"male"}},{"index":"1459290746655","absences":[],"recitations":[],"meta":{"name":{"lastName":"YoPoop","middleName":"Case","firstName":"Justin"},"studentID":"19887dh","gender":"male"}},{"index":"1459290793974","absences":[],"recitations":[],"meta":{"name":{"lastName":"Gorgo","middleName":"Apee","firstName":"Crypto"},"studentID":"9908gYR2","gender":"male"}},{"index":"1459290827511","absences":[],"recitations":[],"meta":{"name":{"lastName":"Istanbul","middleName":"Frankfurt","firstName":"Athene"},"studentID":"diufiui8984","gender":"female"}},{"index":"1459290868501","absences":[],"recitations":[],"meta":{"name":{"lastName":"Great","middleName":"Rover","firstName":"Eric"},"studentID":"9087654Tr","gender":"male"}},{"index":"1459290893086","absences":[],"recitations":[],"meta":{"name":{"lastName":"Let","middleName":"Banjo","firstName":"Barney"},"studentID":"90766tu","gender":"male"}},{"index":"1459290921141","absences":[],"recitations":[],"meta":{"name":{"lastName":"Machegne","middleName":"Copier","firstName":"Franco"},"studentID":"8990916tY","gender":"male"}},{"index":"1459290961014","absences":[],"recitations":[],"meta":{"name":{"lastName":"Motore","middleName":"Kee","firstName":"Suzu"},"studentID":"kopo752","gender":"male"}},{"index":"1459291013038","absences":[],"recitations":[],"meta":{"name":{"lastName":"S","middleName":"Booted","firstName":"Dexter"},"studentID":"909876gUo","gender":"male"}},{"index":"1459291049878","absences":[],"recitations":[],"meta":{"name":{"lastName":"Sanches","middleName":"Obama","firstName":"Peru"},"studentID":"90peirur5","gender":"male"}},{"index":"1459291085372","absences":[],"recitations":[],"meta":{"name":{"lastName":"Green","middleName":"Joseph","firstName":"Saint"},"studentID":"uuioe895R","gender":"male"}},{"index":"1459291121323","absences":[],"recitations":[],"meta":{"name":{"lastName":"Shitzou","middleName":"Bull","firstName":"Dirty"},"studentID":"uyuhhss80","gender":"female"}},{"index":"1459291140445","absences":[],"recitations":[],"meta":{"name":{"lastName":"Runner","middleName":"Grunt","firstName":"Keiv"},"studentID":"67989gY","gender":"male"}},{"index":"1459291165957","absences":[],"recitations":[],"meta":{"name":{"lastName":"Jasmine","middleName":"Murphy","firstName":"Alex"},"studentID":"9898dg9","gender":"female"}},{"index":"1459291214204","absences":[],"recitations":[],"meta":{"name":{"lastName":"Etrershka","middleName":"Danzou","firstName":"Olga"},"studentID":"90tryrurh","gender":"female"}},{"index":"1459291241332","absences":[],"recitations":[],"meta":{"name":{"lastName":"Jeffersonn","middleName":"Aladeen","firstName":"Rachelle"},"studentID":"909sd7dg","gender":"female"}},{"index":"1459291281525","absences":[],"recitations":[],"meta":{"name":{"lastName":"Job","middleName":"No","firstName":"Steve"},"studentID":"9we7eehd","gender":"male"}},{"index":"1459291314086","absences":[],"recitations":[],"meta":{"name":{"lastName":"Legorphic","middleName":"Scream","firstName":"Harem"},"studentID":"shdgd778g","gender":"male"}}]}';
             localStorage['--active-class'] = '--class-1459289730499';
-        },
+        }, /*-- temp --*/
 
         showUtils : {
             init : function(){
@@ -73,10 +73,13 @@ define([], function(){
             dom += '    </div>';
 
             dom += '    <div class="swipeout-actions-right">';
-            dom += '        <a class="bg-orange link" href="#">';
+            dom += '        <a class="bg-yellow link" href="#" data-class-action="simulate">';
+            dom += '            <i class="fa fa-fw fa-bar-chart"></i>';
+            dom += '        </a>';
+            dom += '        <a class="bg-orange link" href="#" data-class-action="add-student">';
             dom += '            <i class="fa fa-fw fa-user-plus"></i>';
             dom += '        </a>';
-            dom += '        <a class="swipeout-delete link" href="#">';
+            dom += '        <a class="swipeout-delete link" href="#" data-class-action="delete">';
             dom += '            <i class="fa fa-fw fa-trash"></i>';
             dom += '        </a>';
             dom += '    </div>';
@@ -90,6 +93,7 @@ define([], function(){
                 app.classList.temp();
                 this.add.init();
                 this.list.init();
+                this.perClass.init();
             }, /*--; operation.init --*/
 
             list : {
@@ -185,7 +189,52 @@ define([], function(){
                     }
                 } /*--; operation.add.feedMedia --*/
 
-           }, /*--; operation.add --*/
+            }, /*--; operation.add --*/
+
+            perClass : {
+                init : function(){
+                    this.addStudent();
+                    this.simulateClass();
+                    this.deleteClass();
+                }, /*-- operation.perClass.init --*/
+
+                addStudent : function(){
+                    $('[data-class-action=add-student]').on('click', function(){
+                        localStorage['--active-class'] = $(this).closest('[data-dom]').data('class-index');
+                        app.global.router.init('student-create');
+                        return false;
+                    });
+                }, /*-- operation.perClass.addStudent --*/
+
+                simulateClass : function(){
+                    $('[data-class-action=simulate]').on('click', function(){
+                        localStorage['--active-class'] = $(this).closest('[data-dom]').data('class-index');
+                        app.global.router.init('simulation');
+                        return false;
+                    });
+                }, /*-- operation.perClass.simulateClass --*/
+
+                deleteClass : function(){
+                    $('[data-class-action=delete]').on('click', function(){
+                        var e = $(this).closest('.swipeout');
+
+                        app.global.f7.o.app.swipeoutDelete( e, function(){
+                            localStorage.removeItem( $(this).closest('[data-dom]').data('class-index') );
+
+                            window.setTimeout(function(){
+                                if( ! $('[data-dom=class]').length ){
+                                    console.log('empty now');
+                                    app.global.router.init('class-list');
+                                }
+                            }, 50);
+
+                        });
+
+                        return false;
+                    });
+                } /*-- operation.perClass.deleteClass --*/
+
+            } /*-- operation.perClass --*/
 
         }, /*-- operation --*/
 
