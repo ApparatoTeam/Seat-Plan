@@ -16,6 +16,7 @@ body{
 .navbar .left p{
 	font-family: 'latolight';
 	font-size: 20px;
+	letter-spacing: 1px;
 }
 
 strong{

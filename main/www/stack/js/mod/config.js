@@ -1,7 +1,7 @@
 define(function( require ){
 	'use strict';
 
-	require('jQuery');
+	//require('jQuery');
 	require('TweenMax');
 	require('Framework7');
 
@@ -349,7 +349,10 @@ define(function( require ){
 
 		__route : {
 			init : function(){
-				app.global.router.init('class-list', true);
+				if( localStorage['--temp-db-init'] == null )
+					app.global.router.init('class-list', true);
+				else
+					app.global.router.init('simulation', true);
 			} /*--; route.init --*/
 		} /*-- __route --*/
 

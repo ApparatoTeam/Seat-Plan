@@ -73,7 +73,7 @@
 }
 
 [data-page="class-list"] #class-list-wrap [data-dom="class-name"]{
-    font: 18px/100% 'latolight';
+    font: 17px/100% 'latolight';
 	width: 300px;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -122,6 +122,25 @@ a.bg-orange{
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+[data-page="class-list"] #class-list-wrap .class-meta-schedule{
+    max-width: 130px;
+}
+
+[data-page="class-list"] #class-list-wrap .class-meta-schedule > .class-meta-overflow{
+	position: relative;
+	max-width: 130px;
+    margin-right: 5px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	display: block;
+}
+
+[data-page="class-list"] #class-list-wrap .class-meta-schedule::after{
+	content: '\f073';
+	right: -20px;
 }
 
 [data-page="class-list"] #class-list-wrap .class-meta-student::after{

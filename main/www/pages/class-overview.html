@@ -11,7 +11,7 @@
 
             <div class="center"></div><!--/.center-->
             <div class="right">
-                <a class="link" href="#" data-student="enlist">
+                <a class="link" href="#" data-student-action="enlist">
                     <i class="fa fa-fw fa-user-plus"></i>
                 </a>
             </div><!--/.right-->
@@ -27,7 +27,7 @@
                 <div class="card">
                     <div class="card-header" id="meta-class-name">
                         <div class="chip">
-                            <div class="chip-media"><i class="fa fa-fw fa-rocket"></i></div>
+                            <div class="chip-media"><i class="fa fa-fw fa-sitemap"></i></div>
                             <div class="chip-label" data-class="name"></div>
                         </div>
                     </div><!--/#meta-class-name-->
@@ -48,14 +48,21 @@
                     </div>
 
                     <div class="card-footer">
-                        <a href="#" class="link ripple-white" data-class-action="simulate">Simulate</a>
-                        <a href="#" class="link ripple-white" data-class-action="delete">Delete</a>
+                        <a href="#" class="link ripple-white" data-class-action="simulate">
+                            <i class="fa fa-fw fa-sitemap"></i>&nbsp;
+                            Simulate
+                        </a>
+                        <a href="#" class="link ripple-white" data-class-action="delete">
+                            <i class="fa fa-fw fa-trash"></i>&nbsp;
+                            Delete
+                        </a>
                     </div>
                 </div>
 
             </div><!--/#main-col-meta-ctrl-->
 
             <div class="col-40 main-col" id="main-col-student-list">
+                <span class="preloader preloader-gray" data-dom="student-list-preloader"></span>
                 <div class="list-block">
                     <ul data-dom="student-list"></ul>
                 </div>

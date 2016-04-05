@@ -1,6 +1,6 @@
 define([], function(){
 
-    return window.app.classOverview = window.app.classOverview || {
+    return window.app.classOverview = {
         o : {
             rAF : null,
             klass : null
@@ -15,6 +15,7 @@ define([], function(){
             init : function(){
                 this.simulate();
                 this.student.init();
+                this.deleteClass();
                 this.__back();
             },
 
@@ -25,15 +26,58 @@ define([], function(){
                 });
             },
 
+            deleteClass : function(){
+                $('[data-class-action=delete]').on('click', function(){
+                    localStorage.removeItem( localStorage['--active-class'] );
+                    app.global.router.init('class-list');
+                    return false;
+                });
+            },
+
             student : {
                 init : function(){
-                    this.enlist();
+                    this._list();
                 },
 
-                enlist : function(){
-                    $('[data-student=enlist]').on('click', function(){
+                _list : function(){
+                    $('[data-student-action=enlist]').on('click', function(){
                         app.global.router.init('student-create');
                     });
+                },
+
+                _delete : function( klass, classID, studentID ){
+                    classID = localStorage['--active-class'];
+
+                    $('[data-student]').each(function(){
+
+                        $(this).find('[data-student-action=remove]').on('click', function(){
+                            studentID = $(this).closest('[data-student]').data('student');
+
+                            for(var key in localStorage){
+
+                                if(  key == classID ){
+
+                                    klass = JSON.parse( localStorage[key] );
+                                    for(var s = 0; s < klass.students.length; s+=1 ){
+
+                                        if( studentID == klass.students[s].index ){
+                                            console.log( klass.students[s].meta.name.lastName );
+                                            klass.students.splice(s, 1);
+                                            localStorage[classID] = JSON.stringify( klass );
+                                            $('[data-class=student-count]').children('span').html( klass.students.length );
+                                            app.classOverview.__load.studentData.init();
+
+                                        } /*-- target student --*/
+
+                                    } /*-- end loop of students --*/
+                                }
+                            } /*-- end loop class --*/
+
+                            return false;
+                        }); /*-- end of click per student --*/
+
+                    }); /*-- per student --*/
+                    return;
                 }
             },
 
@@ -45,7 +89,6 @@ define([], function(){
                     });
                 });
             }
-
         }, /*-- misc --*/
 
         __load : {
@@ -69,7 +112,7 @@ define([], function(){
                 $('[data-class=name]').html(klass.meta.name);
                 $('[data-class=schedule]').children('span').html(klass.meta.schedule);
                 $('[data-class=sorting-mode]').children('span').html(
-                    ( klass.meta.sorting.mode ).charAt(0).toUpperCase() + ( klass.meta.sorting.mode ).slice(1) + ', ' + klass.meta.sorting.type
+                    ( klass.meta.sorting.mode ).charAt(0).toUpperCase() + ( klass.meta.sorting.mode ).slice(1) + ': sort by ' + klass.meta.sorting.type
                 );
                 $('[data-class=student-count]').children('span').html(klass.students.length);
 
@@ -78,8 +121,38 @@ define([], function(){
 
             studentData : {
                 init : function(){
-                    this.populate();
+                    this.preload();
                 }, /*-- __load.studentData.init --*/
+
+                preload : function( self ){
+                    self = this;
+
+                    ( new TimelineLite({
+                        onStart : function(){
+                            $('#main-col-student-list').scrollTop(0);
+                            TweenLite.set($('[data-dom=student-list-preloader]'), {
+                                autoAlpha : 1,
+                                onComplete : function(){
+                                    app.classOverview.__load.studentData.populate();
+                                }
+                            });
+                        },
+                        onComplete : function(){
+                            TweenMax.to( $('[data-student]'), 0.3, {
+                                autoAlpha : 1,
+                                onComplete : function(){
+                                    app.classOverview.actions.student._delete();
+                                }
+                            });
+                        }
+                    }) )
+                    .to( $('[data-dom=student-list-preloader]'), 0.3, {
+                        delay : 0.7,
+                        autoAlpha : 0
+                    });
+
+                    return;
+                },
 
                 populate : function( self, klass ){
                     self = this;
@@ -92,6 +165,7 @@ define([], function(){
                             for(var s = 0; s < klass.students.length; s+=1 ){
                                 $('[data-dom=student-list]').append(
                                     self.dom({
+                                        index  : klass.students[s].index,
                                         offset : ( s + 1 ),
                                         studentName : klass.students[s].meta.name.firstName + ' ' + klass.students[s].meta.name.middleName + ' ' + klass.students[s].meta.name.lastName
                                     })
@@ -106,10 +180,11 @@ define([], function(){
                 dom : function( o, dom ){
                     o = o || {
                         offset : null,
+                        index  : null,
                         studentName : null
                     };
 
-                    dom =  '<li class="swipeout">';
+                    dom =  '<li data-student="'+ o.index +'" class="swipeout">';
                     dom += '    <div class="swipeout-content">';
                     dom += '        <div class="item-content">';
                     dom += '            <div class="item-media">';

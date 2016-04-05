@@ -1,6 +1,6 @@
 define([], function(){
 
-    return window.app.classCreate = window.app.classCreate || {
+    return window.app.classCreate = {
         o : {}, /*-- o --*/
 
         initialize : function(){

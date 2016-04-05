@@ -32,6 +32,8 @@
 }
 
 [data-page="class-overview"] .page-content #main-col-meta-ctrl .chip{
+    padding: 0 25px;
+    border-radius: 5px;
     margin-left: auto;
     margin-right: auto;
 }
@@ -41,13 +43,23 @@
     font-family: 'latolight';
 }
 
-[data-page="class-overview"] .page-content #main-col-meta-ctrl .chip .chip-media .fa-rocket{
+[data-page="class-overview"] .page-content #main-col-meta-ctrl .chip .chip-media .fa{
     color: #0AC2D2;
 }
 
 [data-page="class-overview"] .page-content #main-col-meta-ctrl .card-content{
     height: calc(100% - (48px * 2) );
     overflow-y: auto;
+}
+
+[data-page="class-overview"] .page-content #main-col-meta-ctrl [data-class]:not([data-class="name"]){
+    padding: 10px 16px;
+    font-size: 16px;
+}
+
+[data-page="class-overview"] .page-content #main-col-meta-ctrl [data-class]:not([data-class="name"]) .fa{
+    color: #0AC2D2;
+    margin-right: 7px;
 }
 
 [data-page="class-overview"] .page-content #main-col-meta-ctrl [data-class-action]{
@@ -64,9 +76,23 @@
 [data-page="class-overview"] .page-content #main-col-meta-ctrl [data-class-action="delete"]{
     background-color: #ccc;
     color: white;
+    background-color: #f44336;
 }
 
 /*-- student column --*/
+[data-page="class-overview"] .page-content #main-col-student-list [data-student]{
+    opacity: 0;
+    -webkit-visibility: hidden;
+    visibility: hidden;
+}
+
+[data-page="class-overview"] .page-content #main-col-student-list [data-dom="student-list-preloader"]{
+    position: absolute;
+    margin: 30px auto;
+    left: 0;
+    right: 0;
+}
+
 [data-page="class-overview"] .page-content #main-col-student-list{
     background-color: rgba(216,241,243,0.70);
     padding: 0;

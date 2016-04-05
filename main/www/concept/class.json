@@ -35,7 +35,8 @@
         "schedule": null,
         "sorting": {
             "mode": null,
-            "type": null
+            "type": null,
+            "--manual" : []
         }
     }
 }
