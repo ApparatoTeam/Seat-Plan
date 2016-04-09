@@ -5,10 +5,9 @@ define(function( require ){
 	require('TweenMax');
 	require('Framework7');
 
-	return window.app.config = window.app.config || {
+	return window.app.config = {
 
 		initialize : function(){
-			//window.localStorage.removeItem('--user');
 			app.global.f7.init();
 			app.global.moment.init();
 			app.global.physicalButtons.init(function(){
@@ -349,10 +348,18 @@ define(function( require ){
 
 		__route : {
 			init : function(){
-				if( localStorage['--temp-db-init'] == null )
-					app.global.router.init('class-list', true);
-				else
-					app.global.router.init('simulation', true);
+				if( localStorage['--temp-db-init'] == null ){
+					//app.global.router.init('class-list', true);
+					requirejs(['js/mod/router'], function(router){
+                        router.initialize('class-list', true);
+                    });
+				}else{
+					//app.global.router.init('class-overview');
+					requirejs(['js/mod/router'], function(router){
+                        router.initialize('simulation');
+                    });
+				}
+
 			} /*--; route.init --*/
 		} /*-- __route --*/
 

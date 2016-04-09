@@ -1,6 +1,6 @@
 define([], function(){
 
-    return window.app.studentCreate = window.app.studentCreate || {
+    return window.app.studentCreate = {
         o : {}, /*-- o --*/
 
         initialize : function(){
@@ -12,7 +12,10 @@ define([], function(){
         __back : function(){
             $('[data-back-of=student-create]')
             .on('click', function(){
-                app.global.router.init('class-overview');
+                //app.global.router.init('class-overview');
+                requirejs(['js/mod/router'], function(router){
+                    router.initialize('class-overview');
+                });
             });
         },
 
@@ -149,7 +152,10 @@ define([], function(){
                 page = 'class-overview';
             }
 
-            app.global.router.init( page );
+            //app.global.router.init( page );
+            requirejs(['js/mod/router'], function(router){
+                router.initialize(page);
+            });
 
             return;
         } /*-- redirect --*/

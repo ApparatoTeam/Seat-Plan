@@ -1,0 +1,27 @@
+{
+    "index": "--class-1460081498960",
+    "meta": {
+        "name": "Alternate Gender Class",
+        "schedule": "MWF 8am to 9am",
+        "sorting": {
+            "mode": "automatic | manual",
+            "type": "name | name-gender | male-right-block | female-right-block"
+        }
+    },
+    "students": [
+        {
+            "index": "1459289759848",
+            "absences": [],
+            "recitations": [],
+            "meta": {
+                "name": {
+                    "lastName": "Doe",
+                    "middleName": "Booted",
+                    "firstName": "John"
+                },
+                "studentID": "10LN1534",
+                "gender": "male | female"
+            }
+        }
+    ]
+}

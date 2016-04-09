@@ -21,7 +21,10 @@ define([], function(){
 
             simulate : function(){
                 $('[data-class-action=simulate]').on('click', function(){
-                    app.global.router.init('simulation');
+                    //app.global.router.init('simulation');
+                    requirejs(['js/mod/router'], function(router){
+                        router.initialize('simulation');
+                    });
                     $(this).off('click');
                 });
             },
@@ -29,7 +32,10 @@ define([], function(){
             deleteClass : function(){
                 $('[data-class-action=delete]').on('click', function(){
                     localStorage.removeItem( localStorage['--active-class'] );
-                    app.global.router.init('class-list');
+                    //app.global.router.init('class-list');
+                    requirejs(['js/mod/router'], function(router){
+                        router.initialize('class-list');
+                    });
                     return false;
                 });
             },
@@ -41,7 +47,10 @@ define([], function(){
 
                 _list : function(){
                     $('[data-student-action=enlist]').on('click', function(){
-                        app.global.router.init('student-create');
+                        //app.global.router.init('student-create');
+                        requirejs(['js/mod/router'], function(router){
+                            router.initialize('student-create');
+                        });
                     });
                 },
 
@@ -84,8 +93,15 @@ define([], function(){
             __back : function(){
                 $('[data-back-of=class-overview]')
                 .on('click', function(){
+                    /*--
                     app.global.router.init('class-list', false, function(){
                         localStorage['--active-class'] = null;
+                    });
+                    --*/
+                    requirejs(['js/mod/router'], function(router){
+                        router.initialize('class-list', false, function(){
+                            localStorage['--active-class'] = null;
+                        });
                     });
                 });
             }

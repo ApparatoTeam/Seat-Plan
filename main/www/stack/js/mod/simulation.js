@@ -1,5 +1,7 @@
 define([], function(){
 
+    window.app.simulation = null;
+
     return window.app.simulation = {
         o : {
             klass : null,
@@ -10,12 +12,39 @@ define([], function(){
         }, /*-- o --*/
 
         initialize : function(){
+            console.log('simulation initialized...');
+
             this.klass();
             this.displayClassName();
             this.__back();
             this.evaluate.init();
             this.sortType.init();
         }, /*-- initialize --*/
+
+        colorizeBlock : function(self){
+            self = this;
+
+            var min = 0
+            ,   max = 0
+            ,   block = null
+            ,   row = Math.ceil( self.o.klass.students.length / 10 ) * 10
+            ,   d = 0;
+
+            for( var x = 5; x < row + 1; x += 5 ){
+                max = x;
+                min = (max - 5) + 1; // inclusive
+
+                if( (d+1) >= min && (d+1) <= max ){
+                    block = ( min % 2 == 1 || max % 2 == 1 ) ? 'left' : 'right';
+                }
+
+                $('[data-dom=tile]').attr({
+                    'data-block-position' : block
+                });
+                d+=1;
+            }
+
+        }, /*-- colorizeBlock --*/
 
         klass : function(){
             for(var key in localStorage){
@@ -39,7 +68,6 @@ define([], function(){
             checkType : function(){
                 app.simulation.o.sortType = app.simulation.o.klass.meta.sorting.type;
             }
-
         }, /*-- evaluate --*/
 
         sortMode : {
@@ -49,10 +77,10 @@ define([], function(){
                     masonryConfig : null
                 },
 
-                callback : null,
+                operation : null,
 
-                init : function( callback ){
-                    this.callback = callback;
+                init : function( operation ){
+                    this.operation = operation;
                     this.__API_masonry();
                 },
 
@@ -65,46 +93,17 @@ define([], function(){
                         isFitWidth: true,
                         containerStyle: null,
                         originTop : false,
-                        initLayout : true
+                        initLayout : false
                     };
 
-                    if( typeof this.callback === 'function' )
-                        this.callback();
+                    ( typeof this.operation === 'function' ) ? this.operation() : null;
 
                     app.simulation.o.masonry = $('.grid').masonry( self.o.masonryConfig );
-
                 }
 
             }, /*-- sortMode.automatic --*/
 
-            manual : {
-                o : {},
-                callback : null,
-                init : function(){},
-
-                __API_packery : function(){
-                    param = {
-                        itemSelector: '.grid-item',
-                        columnWidth: '.grid-item',
-                        isFitWidth: true,
-                        containerStyle: null,
-                        originTop : false
-                    };
-
-                    app.simulation.o.packery = $('.grid').packery(param);
-
-                    $('.grid').children('.grid-item')
-                    .each(function(index, element){
-                        $('.grid').packery(
-                            'bindDraggabillyEvents',
-                            ( new Draggabilly( element, {
-                                containment : true
-                            }) )
-                        );
-                    });
-
-                }
-            } /*-- sortMode.manual --*/
+            manual : {} /*-- sortMode.manual --*/
 
         }, /*-- sortMode --*/
 
@@ -120,6 +119,7 @@ define([], function(){
                         break;
                     case 'name-gender':
                         this.__sortNameGender.init();
+                        break;
                 }
                 return;
             }, /*-- sortType.evaluate --*/
@@ -128,11 +128,9 @@ define([], function(){
             __sortName : {
                 init : function( self ){
                     self = this;
-                    /// this.__gridAPI();
                     app.simulation.sortMode.automatic.init(function(){
-                        self.build()
+                        self.build();
                     });
-                    //this.build();
                 }, /*-- sortType.__sortName.init --*/
 
                 build : function( self, klass, tmp ){
@@ -153,26 +151,26 @@ define([], function(){
                         for( var e = 0; e < klass.students.length; e+=1 ){
 
                             if( tmp[d] ==  klass.students[e].meta.name.lastName ){
-                                //console.log('-----'+tmp[d]);
-                                /// eval if left block or right block append actions
+
+                                /*--
                                 var min = 0
                                 ,   max = 0
-                                ,   block = null;
+                                ,   block = null
+                                ,   row = Math.ceil( klass.students.length / 10 ) * 10;
 
-                                for( var x = 5; x < klass.students.length + 1; x += 5 ){
+                                for( var x = 5; x < row + 1; x += 5 ){
                                     max = x;
                                     min = (max - 5) + 1; // inclusive
 
                                     if( (d+1) >= min && (d+1) <= max ){
-                                        console.log(max);
                                         block = ( min % 2 == 1 || max % 2 == 1 ) ? 'left' : 'right';
                                     }
-
                                 }
+                                --*/
 
                                 $('[data-dom=tile-inner]').append(
                                     self.dom({
-                                        blockPosition : block,
+                                        blockPosition : '',
                                         index  : klass.students[e].index,
                                         offset : klass.students[e].meta.name.lastName
                                     })
@@ -185,8 +183,12 @@ define([], function(){
                     TweenMax.to($('[data-dom=tile-inner]'), 0.3, {
                         delay : 1.0,
                         autoAlpha : 1,
+                        onStart : function(){
+                            (app.simulation.o.masonry).masonry('reloadItems');
+                        },
                         onComplete : function(){
-
+                            app.simulation.colorizeBlock();
+                            (app.simulation.o.masonry).masonry();
                         }
                     });
 
@@ -208,6 +210,96 @@ define([], function(){
 
             }, /*-- sortType.__sortName --*/
 
+            /*-- 2. Sort by alternate gender --*/
+            __sortNameGender : {
+                init : function(self){
+                    self = this;
+                    app.simulation.sortMode.automatic.init(function(){
+                        self.build();
+                    });
+                },/*-- sortType.__sortNameGender.init --*/
+
+                gender : {
+                    male : [],
+                    female : [],
+                    merged : null
+                },
+
+                build : function(self, klass, tmp){
+                    self = this;
+                    klass = app.simulation.o.klass;
+                    tmp = [];
+
+
+                    for( var s = 0; s < klass.students.length; s+=1 ){
+                        tmp.push( klass.students[s].meta.name.lastName);
+                    }
+
+                    tmp = tmp.sort();
+
+                    for( var d = 0; d < tmp.length; d+=1 ){
+                        for( var e = 0; e < klass.students.length; e+=1 ){
+                            if( tmp[d] ==  klass.students[e].meta.name.lastName && klass.students[e].meta.gender === 'male' ){
+                                (self.gender.male).push( klass.students[e] );
+                            }else if( tmp[d] ==  klass.students[e].meta.name.lastName && klass.students[e].meta.gender === 'female' ){
+                                (self.gender.female).push( klass.students[e] );
+                            }
+                        }
+                    }
+
+                    self.gender.merged = null;
+
+                    self.gender.merged = $.map(self.gender.male, function(v, i) {
+                        if( self.gender.female[i] != undefined )
+                            return [ v, self.gender.female[i] ];
+                        else
+                            return [ v ];
+                    });
+
+                    $('[data-dom=tile-inner]').html('');
+
+                    for( var g = 0; g < self.gender.merged.length; g+=1 ){
+                        $('[data-dom=tile-inner]').append(
+                            self.dom({
+                                blockPosition : 'right',
+                                index  : self.gender.merged[g].index,
+                                offset : self.gender.merged[g].meta.name.lastName,
+                                gender : (self.gender.merged[g].meta.gender).charAt(0)
+                            })
+                        );
+                    }
+
+                    TweenMax.to($('[data-dom=tile-inner]'), 0.3, {
+                        delay : 1.0,
+                        autoAlpha : 1,
+                        onStart : function(){
+                            (app.simulation.o.masonry).masonry('reloadItems');
+                        },
+                        onComplete : function(){
+                            (app.simulation.o.masonry).masonry();
+                        }
+                    });
+
+                }, /*-- sortType.__sortNameGender.build --*/
+
+                dom : function( o, dom ){
+                    o = o || {
+                        blockPosition : null,
+                        index  : null,
+                        offset : null,
+                        gender : null
+                    };
+                    dom  = '<div data-dom="tile" class="grid-item" data-student-index="'+o.index+'" data-block-position="'+o.blockPosition+'">';
+                    dom += '    <div data-dom="tile-data">';
+                    dom += '        <span data-student-gender>'+o.gender+'</span>';
+                    dom += '        <span data-student-offset>'+o.offset+'</span>';
+                    dom += '    </div>';
+                    dom += '</div>';
+                    return dom;
+                } /*-- sortType.__sortName.dom --*/
+
+            } /*-- sortType.__sortNameGender --*/
+
         }, /*-- sortType --*/
 
         displayClassName : function( self ){
@@ -218,19 +310,13 @@ define([], function(){
         __back : function(){
             $('[data-back-of=simulation]')
             .on('click', function(){
-                app.global.router.init('class-overview');
+                //app.global.router.init('class-overview');
+                requirejs(['js/mod/router'], function(router){
+                    router.initialize('class-overview');
+                });
             });
         }
 
     } /*-- simulation --*/
 
 });
-
-/*--
-$('.grid').masonry({
-  itemSelector: '.grid-item',
-  columnWidth: '.grid-item',
-  isFitWidth: true,
-  originTop : false
-});
---*/

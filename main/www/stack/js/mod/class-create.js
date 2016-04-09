@@ -12,7 +12,10 @@ define([], function(){
         __back : function(){
             $('[data-back-of=class-create]')
             .on('click', function(){
-                app.global.router.init('class-overview');
+                //app.global.router.init('class-overview');
+                requirejs(['js/mod/router'], function(router){
+                    router.initialize('class-overview');
+                });
             });
         },
 
@@ -129,7 +132,10 @@ define([], function(){
                 page = 'class-list';
             }
 
-            app.global.router.init( page );
+            //app.global.router.init( page );
+            requirejs(['js/mod/router'], function(router){
+                router.initialize(page);
+            });
 
             return;
         }, /*-- redirect --*/
