@@ -70,57 +70,28 @@ define([], function(){
             }
         }, /*-- evaluate --*/
 
-        sortMode : {
-
-            automatic : {
-                o : {
-                    masonryConfig : null
-                },
-
-                operation : null,
-
-                init : function( operation ){
-                    this.operation = operation;
-                    this.__API_masonry();
-                },
-
-                __API_masonry : function(){
-                    var self = this;
-
-                    this.o.masonryConfig = {
-                        itemSelector: '.grid-item',
-                        columnWidth: '.grid-item',
-                        isFitWidth: true,
-                        containerStyle: null,
-                        originTop : false,
-                        initLayout : false
-                    };
-
-                    ( typeof this.operation === 'function' ) ? this.operation() : null;
-
-                    app.simulation.o.masonry = $('.grid').masonry( self.o.masonryConfig );
-                }
-
-            }, /*-- sortMode.automatic --*/
-
-            manual : {} /*-- sortMode.manual --*/
-
-        }, /*-- sortMode --*/
 
         sortType : {
             init : function(){
+                window.app.sortType = new Object;
                 this.evaluate();
             }, /*-- sortType.init --*/
 
-            evaluate : function(){
+            evaluate : function( sortType ){
                 switch ( app.simulation.o.sortType ) {
                     case 'name':
-                        this.__sortName.init();
+                        sortType = 'sort-by-name'
                         break;
                     case 'name-gender':
-                        this.__sortNameGender.init();
+                        sortType = 'sort-by-name-gnder'
                         break;
                 }
+
+                //--> call to a file
+                requirejs(['js/mod/sort-types/'+sortType], function(obj){
+                    obj.initialize();
+                });
+
                 return;
             }, /*-- sortType.evaluate --*/
 
