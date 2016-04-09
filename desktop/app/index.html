@@ -429,14 +429,14 @@
 			var finalstudents = [];
 			console.log(data[0]);
 			$.each(data[1],function(i,v){
-				var name = {"familyname":v[0]['value'],"givenname":v[1]['value'],"middlename":v[2]['value']};
+				var name = {"lastName":v[0]['value'],"firstName":v[1]['value'],"middleName":v[2]['value']};
 				var student = {
 					"index":v[5]['value'],
 					"absences":v[6]['value'],
 					"recitations":v[7]['value'],
 					"meta":{
 						"name":name,
-						"student ID":v[3]['value'],
+						"studentID":v[3]['value'],
 						"gender":v[4]['value']
 					}
 				};
