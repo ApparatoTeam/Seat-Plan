@@ -25,67 +25,16 @@
 					<section class="content-inner margin-top-no">
 						<div class="card">
 							<div class="card-main">
-								<div class="card-inner">
-									<form id='info_class'>
-										<div class='col-md-8'>
-											<div class="form-group form-group-label form-group-brand">
-											    <label class="floating-label" for="field_name">Class Name</label>
-											    <input data-tag='input' placeholder="Class Name" class="form-control" name="fiel_name" type="text">
-											</div>
-										</div>
-										<div class='col-md-4'>
-											<div class="form-group form-group-label form-group-brand">
-											    <label class="floating-label" for="field_schedule">Schedule</label>
-											    <input data-tag='input' placeholder="Schedule" class="form-control" name="field_schedule" type="text">
-											</div>
-										</div>
-										<div class='col-md-4'>
-											<div class="form-group form-group-label form-group-brand">
-											    <label class="floating-label" for="field_sortMode">Sorting Mode</label>
-											    <select data-tag='select' class="form-control" name="field_sortMode">
-											        <option value="automatic">Automatic</option>
-											        <option value="manual">Manual</option>
-											    </select>
-											</div>
-										</div>
-										<div class='col-md-4'>
-											<div class="form-group form-group-label form-group-brand">
-											    <label class="floating-label" for="field_sortType">Sorting Type</label>
-											    <select data-tag='select' class="form-control" name="field_sortType">
-											        <option value="name">Name</option>
-											        <option value="name-gender">Name - Gender</option>
-											        <option value="male-right-block">Male-Right-Block</option>
-											        <option value="female-right-block">Female-Right-Block</option>
-											    </select>
-											</div>
-										</div>
-										<div class='col-md-12'>
-											<div class="fbtn-inner">
-												<a href="#form_addClass" data-cmd='save' class="pull-right fbtn fbtn-xs fbtn-brand waves-attach waves-circle waves-effect" >
-													<span class="fbtn-text">Save Class</span>
-													<span class="icon">save</span>
-												</a>
-											</div><br/>
-										</div>
-									</form>
+								<div class="card-inner" id='datajson'>
+									json string
 								</div>
 							</div>
 						</div>
 
+						<h3>Expected *.xls view</h3>
 						<div class="collapse form_addStudent">
-							<div class="tile-wrap" id="doc_tile_example_parent">
-								<div id='list_students'>
-									<div class="tile-inner">
-									</div>
-								</div>
-								<div class="tile">
-									<div class="tile-inner">
-										<a class="fbtn fbtn-brand fbtn-sm waves-attach pull-right waves-circle waves-effect" data-backdrop="static" data-toggle="modal" href="#modal_addStudent">
-											<span class="fbtn-text">Add Student</span>
-											<span class="icon">add</span>
-										</a>
-									</div>
-								</div>
+							<div class="tile-wrap" id='excelformat'>
+								excel format
 							</div>
 						</div>
 					</section>
@@ -93,48 +42,6 @@
 			</div>
 		</div>
 	</main>
-
-	<div aria-hidden="true" class="modal fade" id="modal_addStudent" role="dialog" tabindex="-1">
-		<div class="modal-dialog modal-xs">
-			<div class="modal-content">
-				<div class="modal-inner">
-					<p class="h5 margin-top-sm text-black-hint">
-						<form id='info_student'>
-							<div class="form-group form-group-label form-group-brand">
-							    <label class="floating-label" for="field_firstname">Family Name</label>
-							    <input placeholder="Family Name" data-tag='input' class="form-control" name="field_familytname" type="text">
-							</div>
-							<div class="form-group form-group-label form-group-brand">
-							    <label class="floating-label" for="field_givenname">Given Name</label>
-							    <input placeholder="Given Name" data-tag='input' class="form-control" name="field_givenname" type="text">
-							</div>
-							<div class="form-group form-group-label form-group-brand">
-							    <label class="floating-label" for="field_middlename">Middle Name</label>
-							    <input placeholder="Middle Name" data-tag='input' class="form-control" name="field_middlename" type="text">						
-							</div>
-							<div class="form-group form-group-label form-group-brand">
-							    <label class="floating-label" for="field_studentid">Student ID</label>
-							    <input placeholder="Student ID" data-tag='input' class="form-control" name="field_studentid" type="text">						
-							</div>
-							<div class="form-group form-group-label form-group-brand">
-							    <label class="floating-label" for="field_gender">Gender</label>
-							    <select data-tag='select' class="form-control" name="field_gender">
-							        <option value="male">Male</option>
-							        <option value="female">Female</option>
-							    </select>
-							</div>
-						</form>		
-					</p>
-				</div>
-				<div class="modal-footer">
-					<p class="text-right">
-						<a class="btn btn-flat btn-brand-accent waves-attach" data-dismiss="modal">Cancel</a>
-						<a class="btn btn-flat btn-brand-accent waves-attach" data-cmd='add_student'>Save</a>
-					</p>
-				</div>
-			</div>
-		</div>
-	</div>
 
 	<div aria-hidden="true" class="modal fade" id="modal_confirm" role="dialog" tabindex="-1">
 		<div class="modal-dialog modal-xs">
@@ -168,7 +75,7 @@
 			</a>
 			<div class="fbtn-dropdown">
 				<a class="fbtn waves-attach waves-circle waves-effect" data-cmd="export">
-					<span class="fbtn-text">Export</span>
+					<span class="fbtn-text">Export to excel</span>
 					<span class="icon">save</span>
 				</a>
 				<a class="fbtn fbtn-brand waves-attach waves-circle waves-light waves-effect" data-cmd="flush">
@@ -188,7 +95,6 @@
 </html>
 
 <script type="text/javascript">
-
 	var process = function () {
 		"use strict";
 		return {
@@ -292,6 +198,72 @@
 					});
 				}
 			},
+			viewJSON:function(){
+				var data = [JSON.parse(window.localStorage.getItem('class','[]')),JSON.parse(window.localStorage.getItem('students','[]'))];
+				var finalstudents = [];
+				console.log(data[0]);
+				$.each(data[1],function(i,v){
+					var name = {"familyname":v[0]['value'],"givenname":v[1]['value'],"middlename":v[2]['value']};
+					var student = {
+						"index":v[5]['value'],
+						"absences":v[6]['value'],
+						"recitations":v[7]['value'],
+						"meta":{
+							"name":name,
+							"student ID":v[3]['value'],
+							"gender":v[4]['value']
+						}
+					};
+					finalstudents.push(student);
+				});
+
+				var finalclass = {
+					"index":data[0][5]['value'],
+					//"cache-group":data[0][6]['value'],
+					"meta":{
+						"name":data[0][0]['value'],
+						//"stack":data[0][4]['value'],
+						"schedule":data[0][1]['value'],
+						"sorting":{
+							"mode":data[0][2]['value'],
+							"type":data[0][3]['value'],
+						}
+
+					},
+					"students":finalstudents
+				};
+				finalstudents =JSON.stringify(finalclass);
+				$("#datajson").html(finalstudents);
+			},
+			viewJSON_as_HTML:function(){
+				var data = [JSON.parse(window.localStorage.getItem('class','[]')),JSON.parse(window.localStorage.getItem('students','[]'))];
+				var finalstudents = [], content = "", subcontent = "";
+				console.log(data[0]);
+
+				content = "<table class='table'>"+
+							"<tr><td width='150px'><strong>Class Name: </strong></td><td>"+data[0][0]['value']+"</td></tr>"+
+							"<tr><td><strong>Schedule: </strong></td><td>"+data[0][1]['value']+"</td></tr>"+
+						"</table>";
+
+				$.each(data[1],function(i,v){
+				subcontent += "	<tr>"+
+						"		<td>"+(i+1)+"</td>"+
+						"		<td>"+v[0]['value']+", "+v[1]['value']+" "+v[2]['value']+"</td>"+
+						"		<td>"+v[4]['value']+"</td>"+
+						"		<td>"+v[3]['value']+"</td>"+
+						"		<td>"+JSON.stringify(v[6]['value'])+"</td>"+//convert to readable format
+						"		<td>"+JSON.stringify(v[7]['value'])+"</td>"+//convert to readable format
+						"	</tr>";
+				});
+
+				subcontent = "<table class='table'>"+
+							"	<tr><th>#</th><th>Name</th><th>Gender</th><th>Student ID</th><th>Recitation</th><th>Absences</th></tr>"+
+								subcontent+
+							"</table>"; 
+
+				$("#excelformat").html(content);
+				$("#excelformat").append(subcontent);
+			},
 	        searchJSON: function(obj, key, val) {
 			    var objects = [];
 			    for (var i in obj) {
@@ -315,11 +287,15 @@
 			    return objects;
 			},
 			saveFile:function(data,filename,ext){
+				console.log(data);
 				var blob = new Blob(data, {type: "text/plain;charset=utf-8"});					
 				saveAs(blob, filename+ext);
 			}
 	    };
 	}();
+
+	process.viewJSON();
+	process.viewJSON_as_HTML();
 
 	if((window.localStorage.getItem('class') == "")){
 		window.localStorage.setItem('class','[]');
@@ -425,47 +401,8 @@
 			});
 		}
 		else if(data == 'export'){
-			var data = [JSON.parse(window.localStorage.getItem('class','[]')),JSON.parse(window.localStorage.getItem('students','[]'))];
-			var finalstudents = [];
-			console.log(data[0]);
-			$.each(data[1],function(i,v){
-				var name = {"familyname":v[0]['value'],"givenname":v[1]['value'],"middlename":v[2]['value']};
-				var student = {
-					"index":v[5]['value'],
-					"absences":v[6]['value'],
-					"recitations":v[7]['value'],
-					"meta":{
-						"name":name,
-						"student ID":v[3]['value'],
-						"gender":v[4]['value']
-					}
-				};
-				finalstudents.push(student);
-			});
-
-			var finalclass = {
-				"index":data[0][5]['value'],
-				//"cache-group":data[0][6]['value'],
-				"meta":{
-					"name":data[0][0]['value'],
-					//"stack":data[0][4]['value'],
-					"schedule":data[0][1]['value'],
-					"sorting":{
-						"mode":data[0][2]['value'],
-						"type":data[0][3]['value'],
-					}
-
-				},
-				"students":finalstudents
-			};
-			finalstudents =JSON.stringify(finalclass);
-
-			process.saveFile([finalstudents],data[0][0]['value'],".apr");
-
-			/*
-			var blob = new Blob([finalstudents], {type: "text/plain;charset=utf-8"});
-			saveAs(blob, data[0][0]['value']+".apr");
-			*/
+			var data = $("#excelformat").html().toString();
+			process.saveFile([$("#excelformat").html()],"iSeatPlan",".xls");
 		}
 		else{
 			// $("#modal_confirmBody").html('Unknown command.');
