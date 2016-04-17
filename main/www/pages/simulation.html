@@ -4,15 +4,34 @@
         <div class="navbar-inner">
             <div class="left">
                 <a href="#" class="link icon-only" data-back-of="simulation">
-                    <i class="icon icon-back"></i>
+                    <i class="fa fa-fw fa-arrow-left"></i>
                 </a>
                 <p data-dom="class-name"></p>
+                <div data-dom="class-size">
+                    <i class="fa fa-fw fa-user"></i>
+                    <span data-dom="class-size-data">...</span>
+                </div>
             </div><!--/.left-->
 
-            <div class="center"></div><!--/.center-->
+            <div class="center">
+
+            </div><!--/.center-->
 
             <div class="right">
+                
+                <div data-dom="sub-control">
+                    <a href="#" class="link icon-only" data-toggle-scale="trigger">
+                        <i class="fa fa-fw fa-arrows-alt"></i>
+                        <span data-size-control="label">100%</span>
+                        <input type="hidden" data-toggle-scale="dom">
+                    </a>
+                </div>
 
+                <a href="#" class="link icon-only" data-toggle-focus="trigger">
+                    <i class="fa fa-fw fa-clone"></i>
+                    <span data-active-control="label">...</span>
+                    <input type="hidden" data-toggle-focus="dom">
+                </a>
             </div><!--/.right-->
         </div><!--/.navbar-inner-->
 
@@ -28,6 +47,31 @@
 
             <div data-dom="origin">
                 <i class="fa fa-fw fa-user"></i>
+            </div>
+
+            <div data-dom-disp="main-wrapper">
+                <div data-dom-disp="sorting-wrapper">
+                    <div data-dom-disp="sorting-mode">
+                        <label>Mode</label>
+                        <span>...</span>
+                    </div>
+
+                    <div data-dom-disp="sorting-type">
+                        <label>Type</label>
+                        <span>...</span>
+                    </div>
+                </div>
+
+                <div data-dom-disp="addon-wrapper">
+                    <div data-dom-disp="addon-column">
+                        <label>...</label>
+                        <span>...</span>
+                    </div>
+                    <div data-dom-disp="addon-column">
+                        <label>...</label>
+                        <span>...</span>
+                    </div>
+                </div>
             </div>
 
         </div><!--/#canvas-simulator-->
