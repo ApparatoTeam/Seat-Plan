@@ -64,7 +64,7 @@ define([], function(){
 				'.page[data-page='+self.page+']',
 				function(){
 					requirejs(['js/mod/'+self.page], function(obj){
-						self.neutralizeRouter();
+						//self.neutralizeRouter();
                         ( typeof self.callback === 'function' ) ? self.callback() : null;
 						obj.initialize();
 					});
@@ -76,7 +76,7 @@ define([], function(){
         neutralizeRouter : function(){
             require.undef('js/mod/router');
             delete window.app.router;
-            $('[data-page=router').remove();
+            $('[data-page=router]').remove();
         }, /*-- app.router.reset --*/
 
 		neutralizeBackPage : function( self, obj ){

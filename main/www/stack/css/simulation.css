@@ -8,7 +8,6 @@
 [data-page="simulation"] [data-dom="class-size"]{
     min-width: 70px;
     text-align: center;
-    background-color: rgba(0,0,0,0.2);
     border-radius: 5px;
     padding: 0 3px 2px;
 }
@@ -54,7 +53,12 @@
     position: relative;
     height: calc(100% - 40px);
     overflow: hidden;
-    /*transform: rotateY(180deg) rotateZ(180deg);*/
+}
+
+[data-page="simulation"] [data-dom="tile-screen-organizer"]{
+    position: absolute;
+    width: 100%;
+    height: 100%;
 }
 
 [data-page="simulation"] [data-dom="tile-container"]:after{
@@ -152,6 +156,7 @@
 
     text-align: center;
     line-height: 30px;
+    z-index: 1000;
 }
 
 /*-- tile data contents --*/
@@ -338,4 +343,96 @@
 
 [data-page="simulation"] [data-gender-alias="female"] [data-dom="tile-data"]{
     background-color: pink;
+}
+
+/*--
+ - Overlay
+ --*/
+
+/*-- Student expanded --*/
+[data-page="simulation"] [data-student-expanded="container"]{
+    width: 100%;
+    height: 100%;
+    background-color: #f7f7f7;
+}
+
+[data-page="simulation"] [data-student-expanded="container"] .picker-modal-inner{
+    overflow-y: auto;
+}
+
+[data-page="simulation"] [data-student-expanded="container"] .toolbar{
+    background-color: #0ac2d2;
+}
+
+[data-page="simulation"] [data-student-expanded="container"] .toolbar .left{
+    padding-left: 16px;
+    font: 15px/100% 'latolight';
+}
+
+[data-page="simulation"] [data-student-expanded="container"] .card{
+    background-color: white;
+    width: 80%;
+    margin: 8px auto;
+}
+
+[data-page="simulation"] [data-student-expanded="container"] .card-footer .list-block{
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+[data-page="simulation"] [data-student-expanded="container"] [data-student-expanded]{
+    font: 15px/100% 'latoregular';
+}
+
+[data-page="simulation"] [data-student-expanded="container"] [data-student-expanded="student-name"]{
+    text-align: center;
+    letter-spacing: 2px;
+    word-spacing: 2px;
+}
+
+[data-page="simulation"] [data-student-expanded="container"] [data-student-expanded="student-name"] .fa{
+    color: #FFC107;
+}
+
+[data-page="simulation"] [data-student-expanded="container"] [data-student-expanded="attendance"]{
+    color: #F44336;
+    text-transform: uppercase;
+}
+
+[data-page="simulation"] [data-student-expanded="container"] [data-student-expanded="gender"]{
+    text-transform: capitalize;
+}
+
+[data-page="simulation"] [data-student-expanded="container"] .card + .list-block{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*-- Attendance --*/
+[data-page="simulation"] [data-dom="tile"] [data-student-selection="multiple"]{
+    position: absolute;
+    left: 1px;
+    top: 2px;
+    color: #2B2B2B;
+    font-size: 20px;
+    display: none;
+}
+
+[data-page="simulation"] [data-tile-mode="attendance"] [data-student-selection="multiple"]{
+    display: block;
+}
+
+[data-page="simulation"] [data-sub-attendance="absent"]{
+    font: 15px/100% 'latolight';
+    background-color: rgba(0,0,0,0.3);
+    
+    opacity: 0;
+    -webkit-visibility: hidden;
+    visibility: hidden;
+}
+
+[data-page="simulation"] [data-absent] [data-dom="tile-data"]{
+    background-color: #ccc !important;
 }

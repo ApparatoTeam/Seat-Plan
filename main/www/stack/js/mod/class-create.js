@@ -82,7 +82,9 @@ define([], function(){
                                 type : null
                             }
                         },
-                        students : [],
+                        attendance : null,
+                        recitation : null,
+                        students : []
                     }, /*-- submission.cache.build.__class --*/
 
                     setup : function( self  ){
