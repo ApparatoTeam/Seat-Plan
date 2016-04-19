@@ -14,9 +14,12 @@ body{
 }
 
 .navbar .left p{
+    max-width: 200px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 	font-family: 'latolight';
-	font-size: 20px;
-	letter-spacing: 1px;
+	font-size: 15px;
 }
 
 strong{
