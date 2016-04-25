@@ -30,7 +30,7 @@
 										<div class='col-md-8'>
 											<div class="form-group form-group-label form-group-brand">
 											    <label class="floating-label" for="field_name">Class Name</label>
-											    <input data-tag='input' placeholder="Class Name" class="form-control" name="fiel_name" type="text">
+											    <input data-tag='input' placeholder="Class Name" class="form-control" name="field_name" type="text">
 											</div>
 										</div>
 										<div class='col-md-4'>
@@ -39,11 +39,11 @@
 											    <input data-tag='input' placeholder="Schedule" class="form-control" name="field_schedule" type="text">
 											</div>
 										</div>
-										<div class='col-md-4'>
+										<div class='col-md-4' style='display:none;'>
 											<div class="form-group form-group-label form-group-brand">
 											    <label class="floating-label" for="field_sortMode">Sorting Mode</label>
 											    <select data-tag='select' class="form-control" name="field_sortMode">
-											        <option value="automatic">Automatic</option>
+											        <option value="automatic" selected>Automatic</option>
 											        <option value="manual">Manual</option>
 											    </select>
 											</div>
@@ -357,6 +357,7 @@
 				$(this).parent("div").html("");
 				$(".form_addStudent").addClass('in card');
 				var data = JSON.stringify(form);
+
 				window.localStorage.setItem('class',data);
 				process.disable_fields(form);
 
@@ -432,8 +433,8 @@
 				var name = {"lastName":v[0]['value'],"firstName":v[1]['value'],"middleName":v[2]['value']};
 				var student = {
 					"index":v[5]['value'],
-					"absences":v[6]['value'],
-					"recitations":v[7]['value'],
+					"absences":JSON.parse(v[6]['value']),
+					"recitations":JSON.parse(v[7]['value']),
 					"meta":{
 						"name":name,
 						"studentID":v[3]['value'],
@@ -452,12 +453,12 @@
 						"mode":data[0][2]['value'],
 						"type":data[0][3]['value'],
 					}
-
 				},
+				"attendance":{},
+				"recitation":{},
 				"students":finalstudents
 			};
 			finalstudents =JSON.stringify(finalclass);
-
 			process.saveFile([finalstudents],data[0][0]['value'],".apr");
 		}
 	});
