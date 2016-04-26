@@ -10,20 +10,22 @@ define(function( require ){
 		initialize : function(){
 			app.global.f7.init();
 			app.global.moment.init();
-			app.global.physicalButtons.init(function(){
-				alert('back button triggered');
-				return false;
-			});
+			app.global.physicalButtons.init(function(){ return false; });
+
+			if( localStorage['--manual-redirect'] != undefined ){
+				app.config.__route.init();
+				return;
+			}
 			this.preload.init();
 		}, /*-- initialize --*/
 
 		preload : {
 			o : {
-				status : true,
+				status : false,
 				log    : null,
 				tween  : null,
-				rAF		 : null,
-				steps  : 2
+				rAF	   : null,
+				steps  : 0
 			}, //--; preload.o
 
 			init : function(){
@@ -194,7 +196,6 @@ define(function( require ){
 				}
 
 			} /*--; preload.offview --*/
-
 		}, /*-- preload --*/
 
 		user : {
@@ -275,6 +276,7 @@ define(function( require ){
 				},
 
 				data : {
+					
 					item  : 0,
 					token : [],
 					regex : new RegExp('\w', 'ig'),
@@ -320,7 +322,7 @@ define(function( require ){
 							self.item += 1;
 						});
 
-						 return;
+						return;
 					}
 
 				} /*--; user.createNew.data --*/
@@ -348,17 +350,17 @@ define(function( require ){
 
 		__route : {
 			init : function(){
-				if( localStorage['--temp-db-init'] == null ){
+				//if( localStorage['--temp-db-init'] == null ){
 					//app.global.router.init('class-list', true);
 					requirejs(['js/mod/router'], function(router){
-                        router.initialize('class-list', true);
+                        router.initialize('class-list', false);
                     });
-				}else{
+				//}else{
 					//app.global.router.init('class-overview');
-					requirejs(['js/mod/router'], function(router){
-                        router.initialize('simulation');
-                    });
-				}
+				//	requirejs(['js/mod/router'], function(router){
+                //       router.initialize('class-overview');
+                //    });
+				//}
 
 			} /*--; route.init --*/
 		} /*-- __route --*/

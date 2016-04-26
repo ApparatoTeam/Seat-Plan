@@ -12,7 +12,8 @@ define([], function(){
         }, /*-- o --*/
 
         initialize : function(){
-            console.log('simulation initialized...');
+            localStorage['--manual-redirect'] = 'class-overview';
+
             this.o.session = JSON.stringify( Date.now() );
             this.klass();
             this.displayClassName();
@@ -50,7 +51,6 @@ define([], function(){
 
         tileInteraction : {
             init : function(){
-                this.attendance();
                 this.click();
             },
 
@@ -68,12 +68,7 @@ define([], function(){
                         opacity: 1.0
                     });
                 })
-            },
-
-            attendance : function(element){
-                
             }
-
         }, /*-- tileInteraction --*/
 
         screenMode : {
@@ -112,9 +107,9 @@ define([], function(){
 
                 self.PICKER = app.global.f7.o.app.picker({
                     input : $('[data-toggle-focus="dom"]'),
-                    cols : [ { textAlign : 'center', values : [ 'Details', 'Attendance'/*, 'Attendance', 'Rearrange', 'Viewport'*/ ] } ],
+                    cols : [ { textAlign : 'center', values : [ 'Details', 'Attendance',/*, 'Attendance', 'Rearrange', 'Viewport'*/ ] } ],
                     toolbarTemplate : template,
-                    onClose : function(p){
+                    onClose : function( p ){
                         $('[data-active-control=label]').html( p.value[0] );
                         requirejs( [ 'js/mod/screen-mode/'+(p.value[0]).toLowerCase() ], function( obj ){
                             obj.initialize();
@@ -211,6 +206,7 @@ define([], function(){
         }, /*-- showClassDetails --*/
 
         klass : function(){
+            this.o.klass = null;
             for(var key in localStorage){
                 if( key == localStorage['--active-class']){
                     this.o.klass = JSON.parse( localStorage[key] );
@@ -243,7 +239,7 @@ define([], function(){
                         localStorage[key] = JSON.stringify( app.simulation.o.klass );
                     }
                 }
-                console.log('saving...');
+                //console.log('saving...');
             }, interval);
 
             $('[data-dom=class-name]').on('click', function(){
@@ -257,10 +253,10 @@ define([], function(){
                 feed = feed || null;
 
                 app.simulation.o.klass['attendance'][app.simulation.o.session] = {};
-                app.simulation.o.klass['recitation'][app.simulation.o.session] = {};
+                app.simulation.o.klass['recitation'][app.simulation.o.session] = [];
 
-                ( app.simulation.o.sortMode === 'automatic' ) ? this.automatic.init() : this.manual.init() ;
-                //--> shorthand: this[app.simulation.o.sortMode].init();
+                this.automatic.init();
+                
                 app.simulation.showClassDetails.init( (typeof feed.addon === 'function') ? feed.addon : null );
                 
                 app.simulation.fitToViewport.init();
@@ -272,42 +268,12 @@ define([], function(){
                 init : function(){
                     app.simulation.colorizeBlock();
                 } /*-- sortMode.automatic.init --*/
-
             }, /*-- sortMode.automatic --*/
 
             manual : {
                 init : function(){
-                    console.log('sort mode: manual');
                     this.DRAGGABILLY.init();
-                }, /*-- manual.init --*/
-
-                updateTileSystem : function(){
-                    app.simulation.o.packery
-                    .on('dragItemPositioned', function(){
-                        app.simulation.colorizeBlock();
-                    }).trigger('dragItemPositioned');
-                },
-
-                DRAGGABILLY : {
-                    init : function(){
-                        this.instance();
-                    }, /*-- manual.DRAGGABILLY.init --*/
-
-                    instance : function(){
-                        app.simulation.o.packery
-                        .find('.grid-item')
-                        .each( function( i, gridItem ) {
-                			var draggie = new Draggabilly(gridItem, {
-                                containment : '.grid'
-                            });
-
-                			app.simulation.o.packery.packery( 'bindDraggabillyEvents', draggie );
-                		});
-
-                        app.simulation.sortMode.manual.updateTileSystem();
-                    } /*-- manual.DRAGGABILLY.instance --*/
-
-                } /*-- manual.DRAGGABILLY --*/
+                } /*-- manual.init --*/
 
             } /*-- sortMode.manual --*/
         }, /*-- sortMode --*/
@@ -331,6 +297,10 @@ define([], function(){
                     case 'male-right-block':
                         sortType = 'sort-by-male-right-block'
                     break;
+
+                    case 'female-right-block':
+                        sortType = 'sort-by-female-right-block'
+                    break;
                 }
                 //--> call to a file
                 requirejs(['js/mod/sort-type/'+sortType], function(obj){
@@ -348,12 +318,14 @@ define([], function(){
 
         __back : function(){
             $('[data-back-of=simulation]')
-            .on('click', function(){
-                
-                requirejs(['js/mod/router'], function(router){
-                    router.initialize('class-overview');
-                });
+            .on('click', function(e){
 
+                localStorage['--manual-redirect'] = 'class-overview';
+                window.clearInterval( app.simulation.o.autoSave );
+                window.location.reload();
+
+                e.stopImmediatePropagation();
+                e.preventDefault();
             });
         }
 

@@ -39,9 +39,16 @@ define([], function(){
                 self.__data.init( studentIndex );
                 self.recitation.interface( studentIndex );
             });
+
+            ( app.global.f7.o.dom('[data-student-expanded=container]') )
+            .on('closed', function(){
+                self.__data.reset();
+            });
         }, /*-- main --*/
 
         recitation : {
+
+            NOTIFICATION : null,
 
             interface : function( studentIndex, self ){
                 self = this;
@@ -55,20 +62,57 @@ define([], function(){
                 });
             },
 
-            submit : function( studentIndex, value, o ){
+            submit : function( studentIndex, value, o, self ){
+                self = this;
+                $('[data-recitation-input=record]').data({
+                    'saveIndex' : studentIndex
+                });
+
+                TweenLite.set( $('[data-recitation-input=record]'), {
+                    autoAlpha : 1
+                });
+
                 $('[data-recitation-input=record]').on('click', function(e){
                     o = {};
-
                     value = $('[data-recitation-input=textbox]').val();
-                    o[ JSON.stringify( $('[data-student-index='+studentIndex+']').data('student-index') ) ] = value;
 
-                    (app.simulation.o.klass['recitation'][app.simulation.o.session]) = o;
+                    if( value == '' || value.match(/\D/g) ){
+                        self.notification( false, $(this) );
+                        return;
+                    }
 
-                    console.log(app.simulation.o.klass['recitation']);
+                    o[ $(this).data('saveIndex') ] = value;
+
+                    (app.simulation.o.klass['recitation'][app.simulation.o.session]).push( o );
+
+                    self.notification( true, $(this) );
+                    $(this).off('click');
 
                     e.stopImmediatePropagation();
                     e.preventDefault();
                 });
+            },
+
+            notification : function( status, obj, msg ){
+
+                if( $('.notifications').length ) $('.notifications').remove();
+
+                if( status ){
+                    TweenMax.to( obj, 0.3, {
+                        autoAlpha : 0.3
+                    });
+                    msg = 'Recitation recorded'
+                }else{
+                    msg = 'Please provide a valid grade';
+                }
+
+                app.global.f7.o.app.addNotification({
+                    message : msg
+                });
+
+                window.setTimeout(function(){
+                    app.global.f7.o.dom('.close-notification').trigger('click');
+                }, 2000);
             }
 
         }, /*-- recitation --*/
@@ -91,6 +135,16 @@ define([], function(){
                     }
                 }
 
+            },
+
+            reset : function( ellipse ){
+                ellipse = '...';
+
+                $('[data-student-expanded=student-name]').html( ellipse );
+                $('[data-student-expanded=studentID]').html( ellipse );
+                $('[data-student-expanded=gender]').html( ellipse );
+                $('[data-student-expanded=attendance]').html( ellipse );
+                $('[data-recitation-input=textbox]').val(null);
             }
         }
 

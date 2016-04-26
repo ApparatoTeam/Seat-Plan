@@ -14,7 +14,7 @@ define([], function(){
             .on('click', function(){
                 //app.global.router.init('class-overview');
                 requirejs(['js/mod/router'], function(router){
-                    router.initialize('class-overview');
+                    router.initialize('class-list');
                 });
             });
         },
@@ -82,8 +82,8 @@ define([], function(){
                                 type : null
                             }
                         },
-                        attendance : null,
-                        recitation : null,
+                        attendance : {},
+                        recitation : {},
                         students : []
                     }, /*-- submission.cache.build.__class --*/
 
@@ -99,7 +99,7 @@ define([], function(){
                         this.__class.index = key;
                         this.__class.meta.name = cName;
                         this.__class.meta.schedule = cSchedule;
-                        this.__class.meta.sorting.mode = cSortingMode.toLowerCase();
+                        this.__class.meta.sorting.mode = 'automatic'; //cSortingMode.toLowerCase();
                         this.__class.meta.sorting.type = cSortingType.toLowerCase();
 
                         window.localStorage[key] = JSON.stringify( self.__class );

@@ -53,7 +53,9 @@ define([], function(){
 
 		terminal : function( self ){
 			self = this;
-			console.log('to: '+ self.page);
+			//console.log('to: '+ self.page);
+
+			self.page = ( localStorage['--manual-redirect'] == undefined ) ? self.page : localStorage['--manual-redirect'];
 
 			(app.global.f7.o.view).router.load({
 				url : './pages/'+ self.page +'.html'
@@ -83,7 +85,7 @@ define([], function(){
 			self = this; //return;
 			obj = ( (self.ref).split('-')[1] == undefined ) ? self.ref : (self.ref).replace( /\-+\w/g, ((self.ref).match(/\-+\w/g)[0]).charAt(1).toUpperCase() );
 
-			console.log('neutralized: '+ obj);
+			//console.log('neutralized: '+ obj);
 			require.undef('js/mod/'+self.ref);
 			delete window.app[obj];
 			//$('[data-page='+self.ref+']').remove();

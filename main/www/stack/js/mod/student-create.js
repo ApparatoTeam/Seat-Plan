@@ -83,8 +83,6 @@ define([], function(){
 
                 __student : {
                     index : null,
-                    absences : [],
-                    recitations : [],
                     meta : {
                         name : {
                             lastName : null,

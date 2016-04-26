@@ -7,35 +7,57 @@ define([], function(){
         }, /*-- o --*/
 
         initialize : function(){
+            localStorage.removeItem('--manual-redirect');
             this.__load.init();
             this.actions.init();
+            this.update.init();
         }, /*-- initialize --*/
 
         actions : {
             init : function(){
                 this.simulate();
                 this.student.init();
+                this.activity();
+                this.export();
                 this.deleteClass();
                 this.__back();
             },
 
             simulate : function(){
                 $('[data-class-action=simulate]').on('click', function(){
-                    //app.global.router.init('simulation');
-                    requirejs(['js/mod/router'], function(router){
-                        router.initialize('simulation');
-                    });
+                    localStorage['--manual-redirect'] = 'simulation';
+                    window.location.reload();
+                    
+                    //requirejs(['js/mod/router'], function(router){
+                    //    router.initialize('simulation', true);
+                    //});
                     $(this).off('click');
+                    return false;
                 });
             },
 
             deleteClass : function(){
                 $('[data-class-action=delete]').on('click', function(){
                     localStorage.removeItem( localStorage['--active-class'] );
-                    //app.global.router.init('class-list');
                     requirejs(['js/mod/router'], function(router){
                         router.initialize('class-list');
                     });
+                    return false;
+                });
+            },
+
+            activity : function(){
+                $('[data-class-action=activity]').on('click', function(){
+                    requirejs(['js/mod/router'], function(router){
+                        router.initialize('class-activity');
+                    });
+                    return false;
+                });
+            },
+
+            export : function(){
+                $('[data-class-action=export]').on('click', function(){
+                    location.href = location.pathname+'./export/demo/index.html';
                     return false;
                 });
             },
@@ -47,9 +69,18 @@ define([], function(){
 
                 _list : function(){
                     $('[data-student-action=enlist]').on('click', function(){
-                        //app.global.router.init('student-create');
                         requirejs(['js/mod/router'], function(router){
                             router.initialize('student-create');
+                        });
+                    });
+                },
+
+                _update : function(){
+                    $('[data-student-action=update]').on('click', function(){
+                        localStorage['--active-student'] = $(this).closest('[data-student]').data('student');
+                        //return;
+                        requirejs(['js/mod/router'], function(router){
+                            router.initialize('student-update');
                         });
                     });
                 },
@@ -93,14 +124,9 @@ define([], function(){
             __back : function(){
                 $('[data-back-of=class-overview]')
                 .on('click', function(){
-                    /*--
-                    app.global.router.init('class-list', false, function(){
-                        localStorage['--active-class'] = null;
-                    });
-                    --*/
                     requirejs(['js/mod/router'], function(router){
                         router.initialize('class-list', false, function(){
-                            localStorage['--active-class'] = null;
+                            localStorage.removeItem( localStorage['--active-student'] );
                         });
                     });
                 });
@@ -127,9 +153,7 @@ define([], function(){
 
                 $('[data-class=name]').html(klass.meta.name);
                 $('[data-class=schedule]').children('span').html(klass.meta.schedule);
-                $('[data-class=sorting-mode]').children('span').html(
-                    ( klass.meta.sorting.mode ).charAt(0).toUpperCase() + ( klass.meta.sorting.mode ).slice(1) + ': sort by ' + klass.meta.sorting.type
-                );
+                $('[data-class=sorting-type]').children('span').html( klass.meta.sorting.type );
                 $('[data-class=student-count]').children('span').html(klass.students.length);
 
                 return;
@@ -158,6 +182,8 @@ define([], function(){
                                 autoAlpha : 1,
                                 onComplete : function(){
                                     app.classOverview.actions.student._delete();
+                                    app.classOverview.actions.student._update();
+                                    app.classOverview.update.studentHighlight.init();
                                 }
                             });
                         }
@@ -213,10 +239,9 @@ define([], function(){
                     dom += '    </div>';
 
                     dom += '    <div class="swipeout-actions-right">';
-                    dom += '        <a data-student-action="activity" href="#">';
-                    dom += '            <i class="fa fa-fw fa-line-chart"></i>';
+                    dom += '        <a data-student-action="update" class="link" href="#">';
+                    dom += '            <i class="fa fa-fw fa-pencil"></i>';
                     dom += '        </a>';
-
                     dom += '        <a data-student-action="remove" class="swipeout-delete link" href="#">';
                     dom += '            <i class="fa fa-fw fa-close"></i>';
                     dom += '        </a>';
@@ -229,6 +254,72 @@ define([], function(){
             } /*-- __load.studentData --*/
 
         }, /*-- __load --*/
+
+        update : {
+            init : function(){
+                this.sortingType.init();
+            },
+
+            studentHighlight : {
+                init : function(){
+                    this.updated();
+                },
+
+                updated : function(self, student){
+                    student = $('[data-student='+localStorage['--active-student']+']');
+                    //console.log((student.index()) * 50);
+
+                    (new TimelineMax({
+                        onStart : function(){
+                            $('#main-col-student-list').scrollTop((student.index()) * 50);
+                        }
+                    }))
+                    .to(student, 0.5, {
+                        backgroundColor : 'white',
+                        ease : Expo.easeIn
+                    }, 'start')
+                    .to(student, 0.5, {
+                        delay : 5,
+                        backgroundColor : 'rgba(0, 0, 0, 0.08)'
+                    });
+                }
+            },
+
+            sortingType : {
+                init : function( PICKER, self ){
+                    self = this;
+                    PICKER = app.global.f7.o.app.picker({
+                        input : $('[data-field=update-sorting-type]'),
+                        cols : [
+                            {
+                                textAlign : 'center',
+                                values : ['Name', 'Name-Gender', 'Male-Right-Block', 'Female-Right-Block']
+                            }
+                        ],
+                        onClose : function( p ){
+                            $('[data-class=sorting-type]').children('span').html( (p.value[0]).toLowerCase() );
+                            self.cache( (p.value[0]).toLowerCase() );
+                        }
+                    });
+
+                    $('[data-update-button=sorting-type]').on('click', function(){
+                        PICKER.open();
+                        return false;
+                    });
+                }, /*-- update.sortingType.init --*/
+
+                cache : function( value, self, klass ){
+                    klass = JSON.parse( localStorage[app.classOverview.o.klass] );
+                    klass.meta.sorting.type = value;
+
+                    localStorage[app.classOverview.o.klass] = JSON.stringify(klass);
+
+                    //TODO: notification
+                }
+
+            } /*-- update.sortingType --*/
+
+        } /*-- update --*/
 
     }; /*-- classOverview --*/
 

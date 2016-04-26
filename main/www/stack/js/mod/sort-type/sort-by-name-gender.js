@@ -148,8 +148,9 @@ define([], function(){
                     gender : null
                 };
 
-                dom  = '<div data-dom="tile" class="grid-item" data-student-index="'+o.index+'" data-block-position="'+o.blockPosition+'">';
+                dom  = '<div id="--tile-'+o.index+'" data-dom="tile" data-tile-mode class="grid-item" data-student-index="'+o.index+'" data-block-position="'+o.blockPosition+'">';
                 dom += '    <div data-dom="tile-data">';
+                dom += '        <i data-student-selection="multiple" class="fa fa-fw fa-square-o"></i>';
                 dom += '        <span data-student-lastname>'+o.lastName+'</span>';
                 dom += '        <span data-student-firstname>'+o.firstName+'</span>';
                 dom += '        <i class="fa fa-fw fa-'+o.gender+'" data-student-gender></i>';

@@ -11,6 +11,12 @@
 
             <div class="center"></div><!--/.center-->
             <div class="right">
+                <a class="link" href="./export/demo/index.html" data-class-action="export">
+                    <i class="fa fa-fw fa-file-excel-o"></i>
+                </a>
+                <a class="link" href="#" data-class-action="activity">
+                    <i class="fa fa-fw fa-bar-chart"></i>
+                </a>
                 <a class="link" href="#" data-student-action="enlist">
                     <i class="fa fa-fw fa-user-plus"></i>
                 </a>
@@ -37,9 +43,11 @@
                             <i class="fa fa-fw fa-calendar"></i>
                             <span></span>
                         </div>
-                        <div class="card-content-inner" data-class="sorting-mode">
+                        <div class="card-content-inner" data-class="sorting-type">
                             <i class="fa fa-fw fa-random"></i>
                             <span></span>
+                            <input type="hidden" data-field="update-sorting-type">
+                            <a href="#" data-update-button="sorting-type" class="link">edit</a>
                         </div>
                         <div class="card-content-inner" data-class="student-count">
                             <i class="fa fa-fw fa-user"></i>
@@ -54,7 +62,7 @@
                         </a>
                         <a href="#" class="link ripple-white" data-class-action="delete">
                             <i class="fa fa-fw fa-trash"></i>&nbsp;
-                            Delete
+                            Drop
                         </a>
                     </div>
                 </div>
