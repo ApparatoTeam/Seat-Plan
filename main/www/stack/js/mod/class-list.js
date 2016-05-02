@@ -97,7 +97,7 @@ define([], function(){
             dom += '        <a class="bg-orange link" href="#" data-class-action="add-student">';
             dom += '            <i class="fa fa-fw fa-user-plus"></i>';
             dom += '        </a>';
-            dom += '        <a class="bg-green link" href="export/demo/index.html" data-class-action="export">';
+            dom += '        <a class="bg-green link" href="#" data-class-action="export">';
             dom += '            <i class="fa fa-fw fa-file-excel-o"></i>';
             dom += '        </a>';
             dom += '        <a class="swipeout-delete link" href="#" data-class-action="delete">';
@@ -253,7 +253,8 @@ define([], function(){
                 export : function(){
                     $('[data-class-action=export]').on('click', function(){
                         localStorage['--active-class'] = $(this).closest('[data-dom]').data('class-index');
-                        location.href = location.pathname+'./export/demo/index.html';
+                        //location.href = 'export.html';
+                        window.open('http://apparato.net/REST/seat-plan/', _blank);
                         return false;
                     });
                 }, /*-- operation.perClass.export --*/

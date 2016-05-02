@@ -57,7 +57,7 @@ define([], function(){
 
             export : function(){
                 $('[data-class-action=export]').on('click', function(){
-                    location.href = location.pathname+'./export/demo/index.html';
+                    location.href = 'export.html';
                     return false;
                 });
             },
